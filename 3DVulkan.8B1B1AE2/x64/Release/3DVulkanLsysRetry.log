@@ -1,0 +1,4 @@
+﻿LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+  3DVulkanLsysRetry.vcxproj -> C:\Users\jackj\3DVulkanLsys - Copy\x64\Release\3DVulkanLsysRetry.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

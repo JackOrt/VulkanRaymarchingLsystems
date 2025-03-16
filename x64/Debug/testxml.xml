@@ -1,0 +1,1843 @@
+<?xml version="1.0"?>
+<rdc>
+	<header>
+		<driver id="8">Vulkan</driver>
+		<machineIdent>8449</machineIdent>
+		<thumbnail width="1000" height="1000">thumb.jpg</thumbnail>
+		<timebase base="8610948980107" frequency="10" />
+	</header>
+	<chunks version="22">
+		<chunk id="1" chunkIndex="0" name="vkCreateInstance" length="270" threadID="44632" timestamp="5040765" duration="0">
+			<struct name="InitParams" typename="VkInitParams" importantchildren="true">
+				<string name="AppName" typename="string">3D Ray-Marched L-System</string>
+				<string name="EngineName" typename="string">NoEngine</string>
+				<uint name="AppVersion" typename="uint32_t" width="4">4194304</uint>
+				<uint name="EngineVersion" typename="uint32_t" width="4">4194304</uint>
+				<uint name="APIVersion" typename="uint32_t" width="4" string="VK_MAKE_VERSION(1, 2, 0)">4202496</uint>
+				<array name="Layers">
+					<string typename="string">VK_LAYER_KHRONOS_validation</string>
+				</array>
+				<array name="Extensions" important="true">
+					<string typename="string">VK_KHR_surface</string>
+					<string typename="string">VK_KHR_win32_surface</string>
+					<string typename="string">VK_EXT_debug_utils</string>
+				</array>
+				<ResourceId name="InstanceID" typename="VkInstance" width="8">7</ResourceId>
+			</struct>
+		</chunk>
+		<chunk id="1000" chunkIndex="1" name="vkEnumeratePhysicalDevices" length="1937" threadID="44632" timestamp="277577" duration="422">
+			<ResourceId name="instance" typename="VkInstance" width="8">7</ResourceId>
+			<uint name="PhysicalDeviceIndex" typename="uint32_t" width="4">0</uint>
+			<ResourceId name="PhysicalDevice" typename="VkPhysicalDevice" width="8" important="true">9</ResourceId>
+			<array name="legacyUnused_memIdxMap" hidden="true" fixedarray="true">
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+				<uint typename="uint32_t" width="4">0</uint>
+			</array>
+			<struct name="physProps" typename="VkPhysicalDeviceProperties">
+				<uint name="apiVersion" typename="uint32_t" width="4" string="VK_MAKE_VERSION(1, 3, 280)">4206872</uint>
+				<uint name="driverVersion" typename="uint32_t" width="4">8388910</uint>
+				<uint name="vendorID" typename="uint32_t" width="4">4098</uint>
+				<uint name="deviceID" typename="uint32_t" width="4">6400</uint>
+				<enum name="deviceType" typename="VkPhysicalDeviceType" width="4" string="VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU">1</enum>
+				<string name="deviceName" typename="string">AMD Radeon 780M Graphics</string>
+				<array name="pipelineCacheUUID" fixedarray="true">
+					<uint typename="uint8_t" width="1">188</uint>
+					<uint typename="uint8_t" width="1">61</uint>
+					<uint typename="uint8_t" width="1">92</uint>
+					<uint typename="uint8_t" width="1">156</uint>
+					<uint typename="uint8_t" width="1">136</uint>
+					<uint typename="uint8_t" width="1">73</uint>
+					<uint typename="uint8_t" width="1">92</uint>
+					<uint typename="uint8_t" width="1">110</uint>
+					<uint typename="uint8_t" width="1">143</uint>
+					<uint typename="uint8_t" width="1">237</uint>
+					<uint typename="uint8_t" width="1">24</uint>
+					<uint typename="uint8_t" width="1">34</uint>
+					<uint typename="uint8_t" width="1">4</uint>
+					<uint typename="uint8_t" width="1">176</uint>
+					<uint typename="uint8_t" width="1">172</uint>
+					<uint typename="uint8_t" width="1">26</uint>
+				</array>
+				<struct name="limits" typename="VkPhysicalDeviceLimits">
+					<uint name="maxImageDimension1D" typename="uint32_t" width="4">16384</uint>
+					<uint name="maxImageDimension2D" typename="uint32_t" width="4">16384</uint>
+					<uint name="maxImageDimension3D" typename="uint32_t" width="4">8192</uint>
+					<uint name="maxImageDimensionCube" typename="uint32_t" width="4">16384</uint>
+					<uint name="maxImageArrayLayers" typename="uint32_t" width="4">8192</uint>
+					<uint name="maxTexelBufferElements" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxUniformBufferRange" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxStorageBufferRange" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPushConstantsSize" typename="uint32_t" width="4">128</uint>
+					<uint name="maxMemoryAllocationCount" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxSamplerAllocationCount" typename="uint32_t" width="4">1048576</uint>
+					<uint name="bufferImageGranularity" typename="uint64_t" width="8">1</uint>
+					<uint name="sparseAddressSpaceSize" typename="uint64_t" width="8">140711718551552</uint>
+					<uint name="maxBoundDescriptorSets" typename="uint32_t" width="4">32</uint>
+					<uint name="maxPerStageDescriptorSamplers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageDescriptorUniformBuffers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageDescriptorStorageBuffers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageDescriptorSampledImages" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageDescriptorStorageImages" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageDescriptorInputAttachments" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxPerStageResources" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetSamplers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetUniformBuffers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetUniformBuffersDynamic" typename="uint32_t" width="4">8</uint>
+					<uint name="maxDescriptorSetStorageBuffers" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetStorageBuffersDynamic" typename="uint32_t" width="4">8</uint>
+					<uint name="maxDescriptorSetSampledImages" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetStorageImages" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDescriptorSetInputAttachments" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxVertexInputAttributes" typename="uint32_t" width="4">64</uint>
+					<uint name="maxVertexInputBindings" typename="uint32_t" width="4">32</uint>
+					<uint name="maxVertexInputAttributeOffset" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxVertexInputBindingStride" typename="uint32_t" width="4">16383</uint>
+					<uint name="maxVertexOutputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxTessellationGenerationLevel" typename="uint32_t" width="4">64</uint>
+					<uint name="maxTessellationPatchSize" typename="uint32_t" width="4">32</uint>
+					<uint name="maxTessellationControlPerVertexInputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxTessellationControlPerVertexOutputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxTessellationControlPerPatchOutputComponents" typename="uint32_t" width="4">120</uint>
+					<uint name="maxTessellationControlTotalOutputComponents" typename="uint32_t" width="4">4096</uint>
+					<uint name="maxTessellationEvaluationInputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxTessellationEvaluationOutputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxGeometryShaderInvocations" typename="uint32_t" width="4">126</uint>
+					<uint name="maxGeometryInputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxGeometryOutputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxGeometryOutputVertices" typename="uint32_t" width="4">256</uint>
+					<uint name="maxGeometryTotalOutputComponents" typename="uint32_t" width="4">1024</uint>
+					<uint name="maxFragmentInputComponents" typename="uint32_t" width="4">128</uint>
+					<uint name="maxFragmentOutputAttachments" typename="uint32_t" width="4">8</uint>
+					<uint name="maxFragmentDualSrcAttachments" typename="uint32_t" width="4">1</uint>
+					<uint name="maxFragmentCombinedOutputResources" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxComputeSharedMemorySize" typename="uint32_t" width="4">32768</uint>
+					<array name="maxComputeWorkGroupCount" fixedarray="true">
+						<uint typename="uint32_t" width="4">4294967295</uint>
+						<uint typename="uint32_t" width="4">65535</uint>
+						<uint typename="uint32_t" width="4">65535</uint>
+					</array>
+					<uint name="maxComputeWorkGroupInvocations" typename="uint32_t" width="4">1024</uint>
+					<array name="maxComputeWorkGroupSize" fixedarray="true">
+						<uint typename="uint32_t" width="4">1024</uint>
+						<uint typename="uint32_t" width="4">1024</uint>
+						<uint typename="uint32_t" width="4">1024</uint>
+					</array>
+					<uint name="subPixelPrecisionBits" typename="uint32_t" width="4">8</uint>
+					<uint name="subTexelPrecisionBits" typename="uint32_t" width="4">8</uint>
+					<uint name="mipmapPrecisionBits" typename="uint32_t" width="4">8</uint>
+					<uint name="maxDrawIndexedIndexValue" typename="uint32_t" width="4">4294967295</uint>
+					<uint name="maxDrawIndirectCount" typename="uint32_t" width="4">4294967295</uint>
+					<float name="maxSamplerLodBias" typename="float" width="4">15.99609375</float>
+					<float name="maxSamplerAnisotropy" typename="float" width="4">16</float>
+					<uint name="maxViewports" typename="uint32_t" width="4">16</uint>
+					<array name="maxViewportDimensions" fixedarray="true">
+						<uint typename="uint32_t" width="4">16384</uint>
+						<uint typename="uint32_t" width="4">16384</uint>
+					</array>
+					<array name="viewportBoundsRange" fixedarray="true">
+						<float typename="float" width="4">-32768</float>
+						<float typename="float" width="4">32767</float>
+					</array>
+					<uint name="viewportSubPixelBits" typename="uint32_t" width="4">8</uint>
+					<uint name="minMemoryMapAlignment" typename="uint64_t" width="8">64</uint>
+					<uint name="minTexelBufferOffsetAlignment" typename="uint64_t" width="8">4</uint>
+					<uint name="minUniformBufferOffsetAlignment" typename="uint64_t" width="8">16</uint>
+					<uint name="minStorageBufferOffsetAlignment" typename="uint64_t" width="8">4</uint>
+					<int name="minTexelOffset" typename="int32_t" width="4">-64</int>
+					<uint name="maxTexelOffset" typename="uint32_t" width="4">63</uint>
+					<int name="minTexelGatherOffset" typename="int32_t" width="4">-32</int>
+					<uint name="maxTexelGatherOffset" typename="uint32_t" width="4">31</uint>
+					<float name="minInterpolationOffset" typename="float" width="4">-2</float>
+					<float name="maxInterpolationOffset" typename="float" width="4">1</float>
+					<uint name="subPixelInterpolationOffsetBits" typename="uint32_t" width="4">8</uint>
+					<uint name="maxFramebufferWidth" typename="uint32_t" width="4">16384</uint>
+					<uint name="maxFramebufferHeight" typename="uint32_t" width="4">16384</uint>
+					<uint name="maxFramebufferLayers" typename="uint32_t" width="4">8192</uint>
+					<enum name="framebufferColorSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="framebufferDepthSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="framebufferStencilSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="framebufferNoAttachmentsSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<uint name="maxColorAttachments" typename="uint32_t" width="4">8</uint>
+					<enum name="sampledImageColorSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="sampledImageIntegerSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="sampledImageDepthSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="sampledImageStencilSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<enum name="storageImageSampleCounts" typename="VkSampleCountFlags" width="4" string="VK_SAMPLE_COUNT_1_BIT | VK_SAMPLE_COUNT_2_BIT | VK_SAMPLE_COUNT_4_BIT | VK_SAMPLE_COUNT_8_BIT">15</enum>
+					<uint name="maxSampleMaskWords" typename="uint32_t" width="4">1</uint>
+					<uint name="timestampComputeAndGraphics" typename="uint32_t" width="4">1</uint>
+					<float name="timestampPeriod" typename="float" width="4">10</float>
+					<uint name="maxClipDistances" typename="uint32_t" width="4">8</uint>
+					<uint name="maxCullDistances" typename="uint32_t" width="4">8</uint>
+					<uint name="maxCombinedClipAndCullDistances" typename="uint32_t" width="4">8</uint>
+					<uint name="discreteQueuePriorities" typename="uint32_t" width="4">2</uint>
+					<array name="pointSizeRange" fixedarray="true">
+						<float typename="float" width="4">0</float>
+						<float typename="float" width="4">8191.875</float>
+					</array>
+					<array name="lineWidthRange" fixedarray="true">
+						<float typename="float" width="4">1</float>
+						<float typename="float" width="4">8191.875</float>
+					</array>
+					<float name="pointSizeGranularity" typename="float" width="4">0.125</float>
+					<float name="lineWidthGranularity" typename="float" width="4">0.125</float>
+					<uint name="strictLines" typename="uint32_t" width="4">0</uint>
+					<uint name="standardSampleLocations" typename="uint32_t" width="4">1</uint>
+					<uint name="optimalBufferCopyOffsetAlignment" typename="uint64_t" width="8">1</uint>
+					<uint name="optimalBufferCopyRowPitchAlignment" typename="uint64_t" width="8">1</uint>
+					<uint name="nonCoherentAtomSize" typename="uint64_t" width="8">128</uint>
+				</struct>
+				<struct name="sparseProperties" typename="VkPhysicalDeviceSparseProperties">
+					<uint name="residencyStandard2DBlockShape" typename="uint32_t" width="4">1</uint>
+					<uint name="residencyStandard2DMultisampleBlockShape" typename="uint32_t" width="4">0</uint>
+					<uint name="residencyStandard3DBlockShape" typename="uint32_t" width="4">1</uint>
+					<uint name="residencyAlignedMipSize" typename="uint32_t" width="4">0</uint>
+					<uint name="residencyNonResidentStrict" typename="uint32_t" width="4">1</uint>
+				</struct>
+			</struct>
+			<struct name="memProps" typename="VkPhysicalDeviceMemoryProperties">
+				<uint name="memoryTypeCount" typename="uint32_t" width="4">16</uint>
+				<array name="memoryTypes" fixedarray="true">
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT">1</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT">6</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT">7</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">2</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT">14</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">193</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">198</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">199</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">2</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">206</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT">1</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT">6</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT">7</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">2</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT">14</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">193</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">198</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">199</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">2</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT | VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD | VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD">206</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct typename="VkMemoryType">
+						<enum name="propertyFlags" typename="VkMemoryPropertyFlags" width="4" string="VkMemoryPropertyFlagBits(0)">0</enum>
+						<uint name="heapIndex" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</array>
+				<uint name="memoryHeapCount" typename="uint32_t" width="4">3</uint>
+				<array name="memoryHeaps" fixedarray="true">
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">4026531840</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VK_MEMORY_HEAP_DEVICE_LOCAL_BIT | VK_MEMORY_HEAP_MULTI_INSTANCE_BIT">3</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">31764512768</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">268435456</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VK_MEMORY_HEAP_DEVICE_LOCAL_BIT | VK_MEMORY_HEAP_MULTI_INSTANCE_BIT">3</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+					<struct typename="VkMemoryHeap">
+						<uint name="size" typename="uint64_t" width="8">0</uint>
+						<enum name="flags" typename="VkMemoryHeapFlags" width="4" string="VkMemoryHeapFlagBits(0)">0</enum>
+					</struct>
+				</array>
+			</struct>
+			<struct name="physFeatures" typename="VkPhysicalDeviceFeatures">
+				<uint name="robustBufferAccess" typename="uint32_t" width="4">1</uint>
+				<uint name="fullDrawIndexUint32" typename="uint32_t" width="4">1</uint>
+				<uint name="imageCubeArray" typename="uint32_t" width="4">1</uint>
+				<uint name="independentBlend" typename="uint32_t" width="4">1</uint>
+				<uint name="geometryShader" typename="uint32_t" width="4">1</uint>
+				<uint name="tessellationShader" typename="uint32_t" width="4">1</uint>
+				<uint name="sampleRateShading" typename="uint32_t" width="4">1</uint>
+				<uint name="dualSrcBlend" typename="uint32_t" width="4">1</uint>
+				<uint name="logicOp" typename="uint32_t" width="4">1</uint>
+				<uint name="multiDrawIndirect" typename="uint32_t" width="4">1</uint>
+				<uint name="drawIndirectFirstInstance" typename="uint32_t" width="4">1</uint>
+				<uint name="depthClamp" typename="uint32_t" width="4">1</uint>
+				<uint name="depthBiasClamp" typename="uint32_t" width="4">1</uint>
+				<uint name="fillModeNonSolid" typename="uint32_t" width="4">1</uint>
+				<uint name="depthBounds" typename="uint32_t" width="4">1</uint>
+				<uint name="wideLines" typename="uint32_t" width="4">1</uint>
+				<uint name="largePoints" typename="uint32_t" width="4">1</uint>
+				<uint name="alphaToOne" typename="uint32_t" width="4">0</uint>
+				<uint name="multiViewport" typename="uint32_t" width="4">1</uint>
+				<uint name="samplerAnisotropy" typename="uint32_t" width="4">1</uint>
+				<uint name="textureCompressionETC2" typename="uint32_t" width="4">0</uint>
+				<uint name="textureCompressionASTC_LDR" typename="uint32_t" width="4">0</uint>
+				<uint name="textureCompressionBC" typename="uint32_t" width="4">1</uint>
+				<uint name="occlusionQueryPrecise" typename="uint32_t" width="4">1</uint>
+				<uint name="pipelineStatisticsQuery" typename="uint32_t" width="4">1</uint>
+				<uint name="vertexPipelineStoresAndAtomics" typename="uint32_t" width="4">1</uint>
+				<uint name="fragmentStoresAndAtomics" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderTessellationAndGeometryPointSize" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderImageGatherExtended" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageImageExtendedFormats" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageImageMultisample" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageImageReadWithoutFormat" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageImageWriteWithoutFormat" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderUniformBufferArrayDynamicIndexing" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderSampledImageArrayDynamicIndexing" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageBufferArrayDynamicIndexing" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderStorageImageArrayDynamicIndexing" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderClipDistance" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderCullDistance" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderFloat64" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderInt64" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderInt16" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderResourceResidency" typename="uint32_t" width="4">1</uint>
+				<uint name="shaderResourceMinLod" typename="uint32_t" width="4">1</uint>
+				<uint name="sparseBinding" typename="uint32_t" width="4">1</uint>
+				<uint name="sparseResidencyBuffer" typename="uint32_t" width="4">1</uint>
+				<uint name="sparseResidencyImage2D" typename="uint32_t" width="4">1</uint>
+				<uint name="sparseResidencyImage3D" typename="uint32_t" width="4">1</uint>
+				<uint name="sparseResidency2Samples" typename="uint32_t" width="4">0</uint>
+				<uint name="sparseResidency4Samples" typename="uint32_t" width="4">0</uint>
+				<uint name="sparseResidency8Samples" typename="uint32_t" width="4">0</uint>
+				<uint name="sparseResidency16Samples" typename="uint32_t" width="4">0</uint>
+				<uint name="sparseResidencyAliased" typename="uint32_t" width="4">1</uint>
+				<uint name="variableMultisampleRate" typename="uint32_t" width="4">1</uint>
+				<uint name="inheritedQueries" typename="uint32_t" width="4">1</uint>
+			</struct>
+			<uint name="queueCount" typename="uint32_t" width="4">5</uint>
+			<array name="queueProps" fixedarray="true">
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT | VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT">15</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">1</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">64</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1</uint>
+						<uint name="height" typename="uint32_t" width="4">1</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VK_QUEUE_COMPUTE_BIT | VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT">14</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">2</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">64</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1</uint>
+						<uint name="height" typename="uint32_t" width="4">1</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT">12</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">1</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">64</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">16</uint>
+						<uint name="height" typename="uint32_t" width="4">16</uint>
+						<uint name="depth" typename="uint32_t" width="4">8</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">1</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VK_QUEUE_VIDEO_DECODE_BIT_KHR">32</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">1</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+				<struct typename="VkQueueFamilyProperties">
+					<enum name="queueFlags" typename="VkQueueFlags" width="4" string="VkQueueFlagBits(0)">0</enum>
+					<uint name="queueCount" typename="uint32_t" width="4">0</uint>
+					<uint name="timestampValidBits" typename="uint32_t" width="4">0</uint>
+					<struct name="minImageTransferGranularity" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">0</uint>
+						<uint name="height" typename="uint32_t" width="4">0</uint>
+						<uint name="depth" typename="uint32_t" width="4">0</uint>
+					</struct>
+				</struct>
+			</array>
+			<struct name="driverProps" typename="VkPhysicalDeviceDriverProperties" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES">1000196000</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="driverID" typename="VkDriverId" width="4" string="VK_DRIVER_ID_AMD_PROPRIETARY">1</enum>
+				<string name="driverName" typename="string">AMD proprietary driver</string>
+				<string name="driverInfo" typename="string">24.10.30.07 (LLPC)</string>
+				<struct name="conformanceVersion" typename="VkConformanceVersion">
+					<uint name="major" typename="uint8_t" width="1">1</uint>
+					<uint name="minor" typename="uint8_t" width="1">3</uint>
+					<uint name="subminor" typename="uint8_t" width="1">5</uint>
+					<uint name="patch" typename="uint8_t" width="1">2</uint>
+				</struct>
+			</struct>
+		</chunk>
+		<chunk id="1001" chunkIndex="2" name="vkCreateDevice" length="363" threadID="44632" timestamp="279510" duration="10835">
+			<ResourceId name="physicalDevice" typename="VkPhysicalDevice" width="8" important="true">9</ResourceId>
+			<struct name="CreateInfo" typename="VkDeviceCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO">3</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkDeviceCreateFlags" width="4" string="0">0</enum>
+				<uint name="queueCreateInfoCount" typename="uint32_t" width="4">1</uint>
+				<array name="pQueueCreateInfos">
+					<struct typename="VkDeviceQueueCreateInfo" importantchildren="true">
+						<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO">2</enum>
+						<null name="pNext" typename="void *" />
+						<enum name="flags" typename="VkDeviceQueueCreateFlags" width="4" string="VkDeviceQueueCreateFlagBits(0)">0</enum>
+						<uint name="queueFamilyIndex" typename="uint32_t" width="4">0</uint>
+						<uint name="queueCount" typename="uint32_t" width="4">1</uint>
+						<array name="pQueuePriorities">
+							<float typename="float" width="4">1</float>
+						</array>
+					</struct>
+				</array>
+				<uint name="enabledLayerCount" typename="uint32_t" width="4">1</uint>
+				<array name="ppEnabledLayerNames">
+					<string typename="string">VK_LAYER_KHRONOS_validation</string>
+				</array>
+				<uint name="enabledExtensionCount" typename="uint32_t" width="4">1</uint>
+				<array name="ppEnabledExtensionNames" important="true">
+					<string typename="string">VK_KHR_swapchain</string>
+				</array>
+				<struct name="pEnabledFeatures" typename="VkPhysicalDeviceFeatures" nullable="true">
+					<uint name="robustBufferAccess" typename="uint32_t" width="4">0</uint>
+					<uint name="fullDrawIndexUint32" typename="uint32_t" width="4">0</uint>
+					<uint name="imageCubeArray" typename="uint32_t" width="4">0</uint>
+					<uint name="independentBlend" typename="uint32_t" width="4">0</uint>
+					<uint name="geometryShader" typename="uint32_t" width="4">0</uint>
+					<uint name="tessellationShader" typename="uint32_t" width="4">0</uint>
+					<uint name="sampleRateShading" typename="uint32_t" width="4">0</uint>
+					<uint name="dualSrcBlend" typename="uint32_t" width="4">0</uint>
+					<uint name="logicOp" typename="uint32_t" width="4">0</uint>
+					<uint name="multiDrawIndirect" typename="uint32_t" width="4">0</uint>
+					<uint name="drawIndirectFirstInstance" typename="uint32_t" width="4">0</uint>
+					<uint name="depthClamp" typename="uint32_t" width="4">0</uint>
+					<uint name="depthBiasClamp" typename="uint32_t" width="4">0</uint>
+					<uint name="fillModeNonSolid" typename="uint32_t" width="4">1</uint>
+					<uint name="depthBounds" typename="uint32_t" width="4">0</uint>
+					<uint name="wideLines" typename="uint32_t" width="4">0</uint>
+					<uint name="largePoints" typename="uint32_t" width="4">0</uint>
+					<uint name="alphaToOne" typename="uint32_t" width="4">0</uint>
+					<uint name="multiViewport" typename="uint32_t" width="4">0</uint>
+					<uint name="samplerAnisotropy" typename="uint32_t" width="4">0</uint>
+					<uint name="textureCompressionETC2" typename="uint32_t" width="4">0</uint>
+					<uint name="textureCompressionASTC_LDR" typename="uint32_t" width="4">0</uint>
+					<uint name="textureCompressionBC" typename="uint32_t" width="4">0</uint>
+					<uint name="occlusionQueryPrecise" typename="uint32_t" width="4">0</uint>
+					<uint name="pipelineStatisticsQuery" typename="uint32_t" width="4">0</uint>
+					<uint name="vertexPipelineStoresAndAtomics" typename="uint32_t" width="4">0</uint>
+					<uint name="fragmentStoresAndAtomics" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderTessellationAndGeometryPointSize" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderImageGatherExtended" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageImageExtendedFormats" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageImageMultisample" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageImageReadWithoutFormat" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageImageWriteWithoutFormat" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderUniformBufferArrayDynamicIndexing" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderSampledImageArrayDynamicIndexing" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageBufferArrayDynamicIndexing" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderStorageImageArrayDynamicIndexing" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderClipDistance" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderCullDistance" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderFloat64" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderInt64" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderInt16" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderResourceResidency" typename="uint32_t" width="4">0</uint>
+					<uint name="shaderResourceMinLod" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseBinding" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidencyBuffer" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidencyImage2D" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidencyImage3D" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidency2Samples" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidency4Samples" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidency8Samples" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidency16Samples" typename="uint32_t" width="4">0</uint>
+					<uint name="sparseResidencyAliased" typename="uint32_t" width="4">0</uint>
+					<uint name="variableMultisampleRate" typename="uint32_t" width="4">0</uint>
+					<uint name="inheritedQueries" typename="uint32_t" width="4">0</uint>
+				</struct>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Device" typename="VkDevice" width="8">10</ResourceId>
+		</chunk>
+		<chunk id="1002" chunkIndex="3" name="vkGetDeviceQueue" length="24" threadID="44632" timestamp="533780" duration="10">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<uint name="queueFamilyIndex" typename="uint32_t" width="4" important="true">0</uint>
+			<uint name="queueIndex" typename="uint32_t" width="4" important="true">0</uint>
+			<ResourceId name="Queue" typename="VkQueue" width="8">114</ResourceId>
+		</chunk>
+		<chunk id="1093" chunkIndex="4" name="vkCreateSwapchainKHR" length="106" threadID="44632" timestamp="533954" duration="1">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkSwapchainCreateInfoKHR" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR">1000001000</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkSwapchainCreateFlagsKHR" width="4" string="VkSwapchainCreateFlagBitsKHR(0)">0</enum>
+				<ResourceId name="surface" typename="VkSurfaceKHR" width="8">0</ResourceId>
+				<uint name="minImageCount" typename="uint32_t" width="4" important="true">3</uint>
+				<enum name="imageFormat" typename="VkFormat" width="4" important="true" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+				<enum name="imageColorSpace" typename="VkColorSpaceKHR" width="4" string="VK_COLOR_SPACE_SRGB_NONLINEAR_KHR">0</enum>
+				<struct name="imageExtent" typename="VkExtent2D">
+					<uint name="width" typename="uint32_t" width="4">1000</uint>
+					<uint name="height" typename="uint32_t" width="4">1000</uint>
+				</struct>
+				<uint name="imageArrayLayers" typename="uint32_t" width="4">1</uint>
+				<enum name="imageUsage" typename="VkImageUsageFlags" width="4" string="VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT">16</enum>
+				<enum name="imageSharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				<uint name="queueFamilyIndexCount" typename="uint32_t" width="4">0</uint>
+				<array name="pQueueFamilyIndices" typename="uint32_t" />
+				<enum name="preTransform" typename="VkSurfaceTransformFlagBitsKHR" width="4" string="VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR">1</enum>
+				<enum name="compositeAlpha" typename="VkCompositeAlphaFlagBitsKHR" width="4" string="VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR">1</enum>
+				<enum name="presentMode" typename="VkPresentModeKHR" width="4" string="VK_PRESENT_MODE_FIFO_KHR">2</enum>
+				<uint name="clipped" typename="uint32_t" width="4">1</uint>
+				<ResourceId name="oldSwapchain" typename="VkSwapchainKHR" width="8">0</ResourceId>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="SwapChain" typename="VkSwapchainKHR" width="8">115</ResourceId>
+			<uint name="NumImages" typename="uint32_t" width="4">3</uint>
+		</chunk>
+		<chunk id="1024" chunkIndex="5" name="vkGetSwapchainImagesKHR" length="28" threadID="44632" timestamp="544814" duration="2">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="Swapchain" typename="VkSwapchainKHR" width="8" important="true">115</ResourceId>
+			<uint name="SwapchainImageIndex" typename="uint32_t" width="4" important="true">0</uint>
+			<ResourceId name="SwapchainImage" typename="VkImage" width="8">117</ResourceId>
+		</chunk>
+		<chunk id="1024" chunkIndex="6" name="vkGetSwapchainImagesKHR" length="28" threadID="44632" timestamp="544820" duration="0">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="Swapchain" typename="VkSwapchainKHR" width="8" important="true">115</ResourceId>
+			<uint name="SwapchainImageIndex" typename="uint32_t" width="4" important="true">1</uint>
+			<ResourceId name="SwapchainImage" typename="VkImage" width="8">118</ResourceId>
+		</chunk>
+		<chunk id="1024" chunkIndex="7" name="vkGetSwapchainImagesKHR" length="28" threadID="44632" timestamp="544822" duration="0">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="Swapchain" typename="VkSwapchainKHR" width="8" important="true">115</ResourceId>
+			<uint name="SwapchainImageIndex" typename="uint32_t" width="4" important="true">2</uint>
+			<ResourceId name="SwapchainImage" typename="VkImage" width="8">119</ResourceId>
+		</chunk>
+		<chunk id="1016" chunkIndex="8" name="vkCreateImageView" length="78" threadID="44632" timestamp="545028" duration="2">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkImageViewCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO">15</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkImageViewCreateFlags" width="4" string="VkImageViewCreateFlagBits(0)">0</enum>
+				<ResourceId name="image" typename="VkImage" width="8" important="true">118</ResourceId>
+				<enum name="viewType" typename="VkImageViewType" width="4" string="VK_IMAGE_VIEW_TYPE_2D">1</enum>
+				<enum name="format" typename="VkFormat" width="4" important="true" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+				<struct name="components" typename="VkComponentMapping">
+					<enum name="r" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="g" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="b" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="a" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+				</struct>
+				<struct name="subresourceRange" typename="VkImageSubresourceRange">
+					<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+					<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+				</struct>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="View" typename="VkImageView" width="8">136</ResourceId>
+		</chunk>
+		<chunk id="1010" chunkIndex="9" name="vkCreateRenderPass" length="203" threadID="44632" timestamp="545038" duration="22">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkRenderPassCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO">38</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkRenderPassCreateFlags" width="4" string="VkRenderPassCreateFlagBits(0)">0</enum>
+				<uint name="attachmentCount" typename="uint32_t" width="4">2</uint>
+				<array name="pAttachments" important="true">
+					<struct typename="VkAttachmentDescription" importantchildren="true">
+						<enum name="flags" typename="VkAttachmentDescriptionFlags" width="4" string="VkAttachmentDescriptionFlagBits(0)">0</enum>
+						<enum name="format" typename="VkFormat" width="4" important="true" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+						<enum name="samples" typename="VkSampleCountFlagBits" width="4" string="VK_SAMPLE_COUNT_1_BIT">1</enum>
+						<enum name="loadOp" typename="VkAttachmentLoadOp" width="4" string="VK_ATTACHMENT_LOAD_OP_CLEAR">1</enum>
+						<enum name="storeOp" typename="VkAttachmentStoreOp" width="4" string="VK_ATTACHMENT_STORE_OP_STORE">0</enum>
+						<enum name="stencilLoadOp" typename="VkAttachmentLoadOp" width="4" string="VK_ATTACHMENT_LOAD_OP_DONT_CARE">2</enum>
+						<enum name="stencilStoreOp" typename="VkAttachmentStoreOp" width="4" string="VK_ATTACHMENT_STORE_OP_DONT_CARE">1</enum>
+						<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+						<enum name="finalLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+					</struct>
+					<struct typename="VkAttachmentDescription" importantchildren="true">
+						<enum name="flags" typename="VkAttachmentDescriptionFlags" width="4" string="VkAttachmentDescriptionFlagBits(0)">0</enum>
+						<enum name="format" typename="VkFormat" width="4" important="true" string="VK_FORMAT_D32_SFLOAT">126</enum>
+						<enum name="samples" typename="VkSampleCountFlagBits" width="4" string="VK_SAMPLE_COUNT_1_BIT">1</enum>
+						<enum name="loadOp" typename="VkAttachmentLoadOp" width="4" string="VK_ATTACHMENT_LOAD_OP_CLEAR">1</enum>
+						<enum name="storeOp" typename="VkAttachmentStoreOp" width="4" string="VK_ATTACHMENT_STORE_OP_DONT_CARE">1</enum>
+						<enum name="stencilLoadOp" typename="VkAttachmentLoadOp" width="4" string="VK_ATTACHMENT_LOAD_OP_DONT_CARE">2</enum>
+						<enum name="stencilStoreOp" typename="VkAttachmentStoreOp" width="4" string="VK_ATTACHMENT_STORE_OP_DONT_CARE">1</enum>
+						<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+						<enum name="finalLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL">3</enum>
+					</struct>
+				</array>
+				<uint name="subpassCount" typename="uint32_t" width="4">1</uint>
+				<array name="pSubpasses" important="true">
+					<struct typename="VkSubpassDescription" importantchildren="true">
+						<enum name="flags" typename="VkSubpassDescriptionFlags" width="4" string="VkSubpassDescriptionFlagBits(0)">0</enum>
+						<enum name="pipelineBindPoint" typename="VkPipelineBindPoint" width="4" string="VK_PIPELINE_BIND_POINT_GRAPHICS">0</enum>
+						<uint name="inputAttachmentCount" typename="uint32_t" width="4">0</uint>
+						<array name="pInputAttachments" typename="VkAttachmentReference" />
+						<uint name="colorAttachmentCount" typename="uint32_t" width="4">1</uint>
+						<array name="pColorAttachments" important="true">
+							<struct typename="VkAttachmentReference" importantchildren="true">
+								<uint name="attachment" typename="uint32_t" width="4" important="true">0</uint>
+								<enum name="layout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL">2</enum>
+							</struct>
+						</array>
+						<array name="pResolveAttachments" typename="VkAttachmentReference" />
+						<struct name="pDepthStencilAttachment" typename="VkAttachmentReference" nullable="true" important="true" importantchildren="true">
+							<uint name="attachment" typename="uint32_t" width="4" important="true">1</uint>
+							<enum name="layout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL">3</enum>
+						</struct>
+						<uint name="preserveAttachmentCount" typename="uint32_t" width="4">0</uint>
+						<array name="pPreserveAttachments" typename="uint32_t" />
+					</struct>
+				</array>
+				<uint name="dependencyCount" typename="uint32_t" width="4">0</uint>
+				<array name="pDependencies" typename="VkSubpassDependency" />
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="RenderPass" typename="VkRenderPass" width="8">138</ResourceId>
+		</chunk>
+		<chunk id="1015" chunkIndex="10" name="vkCreateImage" length="106" threadID="44632" timestamp="545069" duration="25">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkImageCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO">14</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkImageCreateFlags" width="4" string="VkImageCreateFlagBits(0)">0</enum>
+				<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+				<enum name="format" typename="VkFormat" width="4" important="true" string="VK_FORMAT_D32_SFLOAT">126</enum>
+				<struct name="extent" typename="VkExtent3D" important="true">
+					<uint name="width" typename="uint32_t" width="4">1000</uint>
+					<uint name="height" typename="uint32_t" width="4">1000</uint>
+					<uint name="depth" typename="uint32_t" width="4">1</uint>
+				</struct>
+				<uint name="mipLevels" typename="uint32_t" width="4">1</uint>
+				<uint name="arrayLayers" typename="uint32_t" width="4">1</uint>
+				<enum name="samples" typename="VkSampleCountFlagBits" width="4" string="VK_SAMPLE_COUNT_1_BIT">1</enum>
+				<enum name="tiling" typename="VkImageTiling" width="4" string="VK_IMAGE_TILING_OPTIMAL">0</enum>
+				<enum name="usage" typename="VkImageUsageFlags" width="4" string="VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT">32</enum>
+				<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				<uint name="queueFamilyIndexCount" typename="uint32_t" width="4">0</uint>
+				<array name="pQueueFamilyIndices" typename="uint32_t" />
+				<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Image" typename="VkImage" width="8">139</ResourceId>
+			<struct name="memoryRequirements" typename="VkMemoryRequirements">
+				<uint name="size" typename="uint64_t" width="8">4260192</uint>
+				<uint name="alignment" typename="uint64_t" width="8">65536</uint>
+				<uint name="memoryTypeBits" typename="uint32_t" width="4">15</uint>
+			</struct>
+		</chunk>
+		<chunk id="1003" chunkIndex="11" name="vkAllocateMemory" length="34" threadID="44632" timestamp="545123" duration="803">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="AllocateInfo" typename="VkMemoryAllocateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO">5</enum>
+				<null name="pNext" typename="void *" />
+				<uint name="allocationSize" typename="uint64_t" width="8" important="true">4260192</uint>
+				<uint name="memoryTypeIndex" typename="uint32_t" width="4" important="true">0</uint>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Memory" typename="VkDeviceMemory" width="8">140</ResourceId>
+		</chunk>
+		<chunk id="1043" chunkIndex="12" name="vkBindImageMemory" length="32" threadID="44632" timestamp="545945" duration="12">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="image" typename="VkImage" width="8" important="true">139</ResourceId>
+			<ResourceId name="memory" typename="VkDeviceMemory" width="8" important="true">140</ResourceId>
+			<uint name="memoryOffset" typename="uint64_t" width="8">0</uint>
+		</chunk>
+		<chunk id="1016" chunkIndex="13" name="vkCreateImageView" length="78" threadID="44632" timestamp="545960" duration="11">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkImageViewCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO">15</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkImageViewCreateFlags" width="4" string="VkImageViewCreateFlagBits(0)">0</enum>
+				<ResourceId name="image" typename="VkImage" width="8" important="true">139</ResourceId>
+				<enum name="viewType" typename="VkImageViewType" width="4" string="VK_IMAGE_VIEW_TYPE_2D">1</enum>
+				<enum name="format" typename="VkFormat" width="4" important="true" string="VK_FORMAT_D32_SFLOAT">126</enum>
+				<struct name="components" typename="VkComponentMapping">
+					<enum name="r" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="g" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="b" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+					<enum name="a" typename="VkComponentSwizzle" width="4" string="VK_COMPONENT_SWIZZLE_IDENTITY">0</enum>
+				</struct>
+				<struct name="subresourceRange" typename="VkImageSubresourceRange">
+					<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_DEPTH_BIT">2</enum>
+					<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+				</struct>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="View" typename="VkImageView" width="8">142</ResourceId>
+		</chunk>
+		<chunk id="1009" chunkIndex="14" name="vkCreateFramebuffer" length="74" threadID="44632" timestamp="546000" duration="3">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkFramebufferCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO">37</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkFramebufferCreateFlags" width="4" string="VkFramebufferCreateFlagBits(0)">0</enum>
+				<ResourceId name="renderPass" typename="VkRenderPass" width="8" important="true">138</ResourceId>
+				<uint name="attachmentCount" typename="uint32_t" width="4">2</uint>
+				<array name="pAttachments" important="true">
+					<ResourceId typename="VkImageView" width="8">136</ResourceId>
+					<ResourceId typename="VkImageView" width="8">142</ResourceId>
+				</array>
+				<uint name="width" typename="uint32_t" width="4">1000</uint>
+				<uint name="height" typename="uint32_t" width="4">1000</uint>
+				<uint name="layers" typename="uint32_t" width="4">1</uint>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Framebuffer" typename="VkFramebuffer" width="8">144</ResourceId>
+		</chunk>
+		<chunk id="1006" chunkIndex="15" name="vkCreateCommandPool" length="30" threadID="44632" timestamp="546031" duration="13">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkCommandPoolCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO">39</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkCommandPoolCreateFlags" width="4" important="true" string="VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT">2</enum>
+				<uint name="queueFamilyIndex" typename="uint32_t" width="4">0</uint>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="CmdPool" typename="VkCommandPool" width="8">146</ResourceId>
+		</chunk>
+		<chunk id="1008" chunkIndex="16" name="vkAllocateCommandBuffers" length="37" threadID="44632" timestamp="546129" duration="0">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="AllocateInfo" typename="VkCommandBufferAllocateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO">40</enum>
+				<null name="pNext" typename="void *" />
+				<ResourceId name="commandPool" typename="VkCommandPool" width="8" important="true">146</ResourceId>
+				<enum name="level" typename="VkCommandBufferLevel" width="4" important="true" string="VK_COMMAND_BUFFER_LEVEL_PRIMARY">0</enum>
+				<uint name="commandBufferCount" typename="uint32_t" width="4">3</uint>
+			</struct>
+			<ResourceId name="CommandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+		</chunk>
+		<chunk id="1025" chunkIndex="17" name="vkCreateSemaphore" length="26" threadID="44632" timestamp="546164" duration="5">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkSemaphoreCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO">9</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkSemaphoreCreateFlags" width="4" important="true" string="0">0</enum>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Semaphore" typename="VkSemaphore" width="8">156</ResourceId>
+		</chunk>
+		<chunk id="1025" chunkIndex="18" name="vkCreateSemaphore" length="26" threadID="44632" timestamp="546170" duration="2">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkSemaphoreCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO">9</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkSemaphoreCreateFlags" width="4" important="true" string="0">0</enum>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Semaphore" typename="VkSemaphore" width="8">157</ResourceId>
+		</chunk>
+		<chunk id="1026" chunkIndex="19" name="vkCreateFence" length="26" threadID="44632" timestamp="546174" duration="3">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkFenceCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_FENCE_CREATE_INFO">8</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkFenceCreateFlags" width="4" important="true" string="VK_FENCE_CREATE_SIGNALED_BIT">1</enum>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Fence" typename="VkFence" width="8">158</ResourceId>
+		</chunk>
+		<chunk id="1019" chunkIndex="20" name="vkCreateShaderModule" length="1397" threadID="44632" timestamp="547525" duration="74">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkShaderModuleCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO">16</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkShaderModuleCreateFlags" width="4" string="0">0</enum>
+				<uint name="codeSize" typename="uint64_t" width="8">1292</uint>
+				<buffer name="pCode" typename="Byte Buffer" important="true" byteLength="1292">0</buffer>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="ShaderModule" typename="VkShaderModule" width="8">163</ResourceId>
+		</chunk>
+		<chunk id="1019" chunkIndex="21" name="vkCreateShaderModule" length="677" threadID="44632" timestamp="547604" duration="20">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkShaderModuleCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO">16</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkShaderModuleCreateFlags" width="4" string="0">0</enum>
+				<uint name="codeSize" typename="uint64_t" width="8">572</uint>
+				<buffer name="pCode" typename="Byte Buffer" important="true" byteLength="572">0</buffer>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="ShaderModule" typename="VkShaderModule" width="8">164</ResourceId>
+		</chunk>
+		<chunk id="1020" chunkIndex="22" name="vkCreatePipelineLayout" length="62" threadID="44632" timestamp="547627" duration="9">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkPipelineLayoutCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO">30</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkPipelineLayoutCreateFlags" width="4" string="VkPipelineLayoutCreateFlagBits(0)">0</enum>
+				<uint name="setLayoutCount" typename="uint32_t" width="4">0</uint>
+				<array name="pSetLayouts" typename="VkDescriptorSetLayout" important="true" />
+				<uint name="pushConstantRangeCount" typename="uint32_t" width="4" important="true">1</uint>
+				<array name="pPushConstantRanges">
+					<struct typename="VkPushConstantRange">
+						<enum name="stageFlags" typename="VkShaderStageFlags" width="4" string="VK_SHADER_STAGE_VERTEX_BIT">1</enum>
+						<uint name="offset" typename="uint32_t" width="4">0</uint>
+						<uint name="size" typename="uint32_t" width="4">64</uint>
+					</struct>
+				</array>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="PipelineLayout" typename="VkPipelineLayout" width="8">165</ResourceId>
+		</chunk>
+		<chunk id="1022" chunkIndex="23" name="vkCreateGraphicsPipelines" length="559" threadID="44632" timestamp="547639" duration="93">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="pipelineCache" typename="VkPipelineCache" width="8">0</ResourceId>
+			<uint name="count" typename="uint32_t" width="4">1</uint>
+			<struct name="CreateInfo" typename="VkGraphicsPipelineCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO">28</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkPipelineCreateFlags" width="4" string="VkPipelineCreateFlagBits(0)">0</enum>
+				<uint name="stageCount" typename="uint32_t" width="4">2</uint>
+				<array name="pStages" important="true">
+					<struct typename="VkPipelineShaderStageCreateInfo" importantchildren="true">
+						<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO">18</enum>
+						<null name="pNext" typename="void *" />
+						<enum name="flags" typename="VkPipelineShaderStageCreateFlags" width="4" string="VkPipelineShaderStageCreateFlagBits(0)">0</enum>
+						<enum name="stage" typename="VkShaderStageFlagBits" width="4" string="VK_SHADER_STAGE_VERTEX_BIT">1</enum>
+						<ResourceId name="module" typename="VkShaderModule" width="8" important="true">163</ResourceId>
+						<string name="pName" typename="string" important="true">main</string>
+						<null name="pSpecializationInfo" typename="VkSpecializationInfo" />
+					</struct>
+					<struct typename="VkPipelineShaderStageCreateInfo" importantchildren="true">
+						<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO">18</enum>
+						<null name="pNext" typename="void *" />
+						<enum name="flags" typename="VkPipelineShaderStageCreateFlags" width="4" string="VkPipelineShaderStageCreateFlagBits(0)">0</enum>
+						<enum name="stage" typename="VkShaderStageFlagBits" width="4" string="VK_SHADER_STAGE_FRAGMENT_BIT">16</enum>
+						<ResourceId name="module" typename="VkShaderModule" width="8" important="true">164</ResourceId>
+						<string name="pName" typename="string" important="true">main</string>
+						<null name="pSpecializationInfo" typename="VkSpecializationInfo" />
+					</struct>
+				</array>
+				<struct name="pVertexInputState" typename="VkPipelineVertexInputStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO">19</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineVertexInputStateCreateFlags" width="4" string="0">0</enum>
+					<uint name="vertexBindingDescriptionCount" typename="uint32_t" width="4">1</uint>
+					<array name="pVertexBindingDescriptions">
+						<struct typename="VkVertexInputBindingDescription">
+							<uint name="binding" typename="uint32_t" width="4">0</uint>
+							<uint name="stride" typename="uint32_t" width="4">12</uint>
+							<enum name="inputRate" typename="VkVertexInputRate" width="4" string="VK_VERTEX_INPUT_RATE_VERTEX">0</enum>
+						</struct>
+					</array>
+					<uint name="vertexAttributeDescriptionCount" typename="uint32_t" width="4">1</uint>
+					<array name="pVertexAttributeDescriptions">
+						<struct typename="VkVertexInputAttributeDescription">
+							<uint name="location" typename="uint32_t" width="4">0</uint>
+							<uint name="binding" typename="uint32_t" width="4">0</uint>
+							<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_R32G32B32_SFLOAT">106</enum>
+							<uint name="offset" typename="uint32_t" width="4">0</uint>
+						</struct>
+					</array>
+				</struct>
+				<struct name="pInputAssemblyState" typename="VkPipelineInputAssemblyStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO">20</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineInputAssemblyStateCreateFlags" width="4" string="0">0</enum>
+					<enum name="topology" typename="VkPrimitiveTopology" width="4" string="VK_PRIMITIVE_TOPOLOGY_LINE_LIST">1</enum>
+					<uint name="primitiveRestartEnable" typename="uint32_t" width="4">0</uint>
+				</struct>
+				<null name="pTessellationState" typename="VkPipelineTessellationStateCreateInfo" />
+				<struct name="pViewportState" typename="VkPipelineViewportStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO">22</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineViewportStateCreateFlags" width="4" string="0">0</enum>
+					<uint name="viewportCount" typename="uint32_t" width="4">1</uint>
+					<array name="pViewports">
+						<struct typename="VkViewport" importantchildren="true">
+							<float name="x" typename="float" width="4" important="true">0</float>
+							<float name="y" typename="float" width="4" important="true">0</float>
+							<float name="width" typename="float" width="4" important="true">1000</float>
+							<float name="height" typename="float" width="4" important="true">1000</float>
+							<float name="minDepth" typename="float" width="4">0</float>
+							<float name="maxDepth" typename="float" width="4">1</float>
+						</struct>
+					</array>
+					<uint name="scissorCount" typename="uint32_t" width="4">1</uint>
+					<array name="pScissors">
+						<struct typename="VkRect2D">
+							<struct name="offset" typename="VkOffset2D">
+								<int name="x" typename="int32_t" width="4">0</int>
+								<int name="y" typename="int32_t" width="4">0</int>
+							</struct>
+							<struct name="extent" typename="VkExtent2D">
+								<uint name="width" typename="uint32_t" width="4">1000</uint>
+								<uint name="height" typename="uint32_t" width="4">1000</uint>
+							</struct>
+						</struct>
+					</array>
+				</struct>
+				<struct name="pRasterizationState" typename="VkPipelineRasterizationStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO">23</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineRasterizationStateCreateFlags" width="4" string="0">0</enum>
+					<uint name="depthClampEnable" typename="uint32_t" width="4">0</uint>
+					<uint name="rasterizerDiscardEnable" typename="uint32_t" width="4">0</uint>
+					<enum name="polygonMode" typename="VkPolygonMode" width="4" string="VK_POLYGON_MODE_LINE">1</enum>
+					<enum name="cullMode" typename="VkCullModeFlags" width="4" string="VK_CULL_MODE_NONE">0</enum>
+					<enum name="frontFace" typename="VkFrontFace" width="4" string="VK_FRONT_FACE_COUNTER_CLOCKWISE">0</enum>
+					<uint name="depthBiasEnable" typename="uint32_t" width="4">0</uint>
+					<float name="depthBiasConstantFactor" typename="float" width="4">0</float>
+					<float name="depthBiasClamp" typename="float" width="4">0</float>
+					<float name="depthBiasSlopeFactor" typename="float" width="4">0</float>
+					<float name="lineWidth" typename="float" width="4">1</float>
+				</struct>
+				<struct name="pMultisampleState" typename="VkPipelineMultisampleStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO">24</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineMultisampleStateCreateFlags" width="4" string="0">0</enum>
+					<enum name="rasterizationSamples" typename="VkSampleCountFlagBits" width="4" string="VK_SAMPLE_COUNT_1_BIT">1</enum>
+					<uint name="sampleShadingEnable" typename="uint32_t" width="4">0</uint>
+					<float name="minSampleShading" typename="float" width="4">0</float>
+					<null name="pSampleMask" typename="uint32_t" />
+					<uint name="alphaToCoverageEnable" typename="uint32_t" width="4">0</uint>
+					<uint name="alphaToOneEnable" typename="uint32_t" width="4">0</uint>
+				</struct>
+				<struct name="pDepthStencilState" typename="VkPipelineDepthStencilStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO">25</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineDepthStencilStateCreateFlags" width="4" string="VkPipelineDepthStencilStateCreateFlagBits(0)">0</enum>
+					<uint name="depthTestEnable" typename="uint32_t" width="4">0</uint>
+					<uint name="depthWriteEnable" typename="uint32_t" width="4">0</uint>
+					<enum name="depthCompareOp" typename="VkCompareOp" width="4" string="VK_COMPARE_OP_NEVER">0</enum>
+					<uint name="depthBoundsTestEnable" typename="uint32_t" width="4">0</uint>
+					<uint name="stencilTestEnable" typename="uint32_t" width="4">0</uint>
+					<struct name="front" typename="VkStencilOpState">
+						<enum name="failOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="passOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="depthFailOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="compareOp" typename="VkCompareOp" width="4" string="VK_COMPARE_OP_NEVER">0</enum>
+						<uint name="compareMask" typename="uint32_t" width="4">0</uint>
+						<uint name="writeMask" typename="uint32_t" width="4">0</uint>
+						<uint name="reference" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<struct name="back" typename="VkStencilOpState">
+						<enum name="failOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="passOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="depthFailOp" typename="VkStencilOp" width="4" string="VK_STENCIL_OP_KEEP">0</enum>
+						<enum name="compareOp" typename="VkCompareOp" width="4" string="VK_COMPARE_OP_NEVER">0</enum>
+						<uint name="compareMask" typename="uint32_t" width="4">0</uint>
+						<uint name="writeMask" typename="uint32_t" width="4">0</uint>
+						<uint name="reference" typename="uint32_t" width="4">0</uint>
+					</struct>
+					<float name="minDepthBounds" typename="float" width="4">0</float>
+					<float name="maxDepthBounds" typename="float" width="4">0</float>
+				</struct>
+				<struct name="pColorBlendState" typename="VkPipelineColorBlendStateCreateInfo" nullable="true" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO">26</enum>
+					<null name="pNext" typename="void *" />
+					<enum name="flags" typename="VkPipelineColorBlendStateCreateFlags" width="4" string="VkPipelineColorBlendStateCreateFlagBits(0)">0</enum>
+					<uint name="logicOpEnable" typename="uint32_t" width="4">0</uint>
+					<enum name="logicOp" typename="VkLogicOp" width="4" string="VK_LOGIC_OP_CLEAR">0</enum>
+					<uint name="attachmentCount" typename="uint32_t" width="4">1</uint>
+					<array name="pAttachments">
+						<struct typename="VkPipelineColorBlendAttachmentState">
+							<uint name="blendEnable" typename="uint32_t" width="4">0</uint>
+							<enum name="srcColorBlendFactor" typename="VkBlendFactor" width="4" string="VK_BLEND_FACTOR_ZERO">0</enum>
+							<enum name="dstColorBlendFactor" typename="VkBlendFactor" width="4" string="VK_BLEND_FACTOR_ZERO">0</enum>
+							<enum name="colorBlendOp" typename="VkBlendOp" width="4" string="VK_BLEND_OP_ADD">0</enum>
+							<enum name="srcAlphaBlendFactor" typename="VkBlendFactor" width="4" string="VK_BLEND_FACTOR_ZERO">0</enum>
+							<enum name="dstAlphaBlendFactor" typename="VkBlendFactor" width="4" string="VK_BLEND_FACTOR_ZERO">0</enum>
+							<enum name="alphaBlendOp" typename="VkBlendOp" width="4" string="VK_BLEND_OP_ADD">0</enum>
+							<enum name="colorWriteMask" typename="VkColorComponentFlags" width="4" string="VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT">15</enum>
+						</struct>
+					</array>
+					<array name="blendConstants" fixedarray="true">
+						<float typename="float" width="4">0</float>
+						<float typename="float" width="4">0</float>
+						<float typename="float" width="4">0</float>
+						<float typename="float" width="4">0</float>
+					</array>
+				</struct>
+				<null name="pDynamicState" typename="VkPipelineDynamicStateCreateInfo" />
+				<ResourceId name="layout" typename="VkPipelineLayout" width="8">165</ResourceId>
+				<ResourceId name="renderPass" typename="VkRenderPass" width="8">138</ResourceId>
+				<uint name="subpass" typename="uint32_t" width="4">0</uint>
+				<ResourceId name="basePipelineHandle" typename="VkPipeline" width="8">0</ResourceId>
+				<int name="basePipelineIndex" typename="int32_t" width="4">0</int>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Pipeline" typename="VkPipeline" width="8">166</ResourceId>
+		</chunk>
+		<chunk id="1013" chunkIndex="24" name="vkCreateBuffer" length="67" threadID="44632" timestamp="547777" duration="6">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="CreateInfo" typename="VkBufferCreateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO">12</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkBufferCreateFlags" width="4" string="VkBufferCreateFlagBits(0)">0</enum>
+				<uint name="size" typename="uint64_t" width="8" important="true">24</uint>
+				<enum name="usage" typename="VkBufferUsageFlags" width="4" string="VK_BUFFER_USAGE_VERTEX_BUFFER_BIT">128</enum>
+				<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				<uint name="queueFamilyIndexCount" typename="uint32_t" width="4">0</uint>
+				<null name="pQueueFamilyIndices" typename="uint32_t" />
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Buffer" typename="VkBuffer" width="8">167</ResourceId>
+			<struct name="memoryRequirements" typename="VkMemoryRequirements">
+				<uint name="size" typename="uint64_t" width="8">24</uint>
+				<uint name="alignment" typename="uint64_t" width="8">4</uint>
+				<uint name="memoryTypeBits" typename="uint32_t" width="4">15</uint>
+			</struct>
+		</chunk>
+		<chunk id="1003" chunkIndex="25" name="vkAllocateMemory" length="34" threadID="44632" timestamp="547804" duration="449">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="AllocateInfo" typename="VkMemoryAllocateInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO">5</enum>
+				<null name="pNext" typename="void *" />
+				<uint name="allocationSize" typename="uint64_t" width="8" important="true">24</uint>
+				<uint name="memoryTypeIndex" typename="uint32_t" width="4" important="true">1</uint>
+			</struct>
+			<null name="pAllocator" typename="VkAllocationCallbacks" />
+			<ResourceId name="Memory" typename="VkDeviceMemory" width="8">168</ResourceId>
+		</chunk>
+		<chunk id="1042" chunkIndex="26" name="vkBindBufferMemory" length="32" threadID="44632" timestamp="548274" duration="1">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="buffer" typename="VkBuffer" width="8" important="true">167</ResourceId>
+			<ResourceId name="memory" typename="VkDeviceMemory" width="8" important="true">168</ResourceId>
+			<uint name="memoryOffset" typename="uint64_t" width="8">0</uint>
+		</chunk>
+		<chunk id="3" chunkIndex="27" name="Internal::Initial Contents" length="216" threadID="44632" timestamp="5040917" duration="0">
+			<enum name="type" typename="VkResourceType" width="4" string="eResDeviceMemory">5</enum>
+			<ResourceId name="id" typename="VkDeviceMemory" width="8" important="true">168</ResourceId>
+			<bool name="IsSparse" typename="bool">false</bool>
+			<uint name="ContentsSize" typename="uint64_t" width="8">24</uint>
+			<buffer name="Contents" typename="Byte Buffer" important="true" byteLength="24">0</buffer>
+		</chunk>
+		<chunk id="2" chunkIndex="28" name="Internal::List of Initial Contents Resources" length="80" threadID="44632" timestamp="5041003" duration="0">
+			<array name="NeededInitials">
+				<struct typename="ResourceManagerInternal::WrittenRecord">
+					<ResourceId name="id" typename="ResourceId" width="8">168</ResourceId>
+					<bool name="written" typename="bool">false</bool>
+				</struct>
+				<struct typename="ResourceManagerInternal::WrittenRecord">
+					<ResourceId name="id" typename="ResourceId" width="8">118</ResourceId>
+					<bool name="written" typename="bool">false</bool>
+				</struct>
+				<struct typename="ResourceManagerInternal::WrittenRecord">
+					<ResourceId name="id" typename="ResourceId" width="8">139</ResourceId>
+					<bool name="written" typename="bool">false</bool>
+				</struct>
+				<struct typename="ResourceManagerInternal::WrittenRecord">
+					<ResourceId name="id" typename="ResourceId" width="8">168</ResourceId>
+					<bool name="written" typename="bool">true</bool>
+				</struct>
+			</array>
+		</chunk>
+		<chunk id="1132" chunkIndex="29" name="Internal::Device Memory References" length="152" threadID="44632" timestamp="5041007" duration="0">
+			<array name="data">
+				<struct typename="MemRefInterval">
+					<ResourceId name="memory" typename="ResourceId" width="8">98</ResourceId>
+					<uint name="start" typename="uint64_t" width="8">0</uint>
+					<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+				</struct>
+				<struct typename="MemRefInterval">
+					<ResourceId name="memory" typename="ResourceId" width="8">109</ResourceId>
+					<uint name="start" typename="uint64_t" width="8">0</uint>
+					<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+				</struct>
+				<struct typename="MemRefInterval">
+					<ResourceId name="memory" typename="ResourceId" width="8">140</ResourceId>
+					<uint name="start" typename="uint64_t" width="8">0</uint>
+					<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+				</struct>
+				<struct typename="MemRefInterval">
+					<ResourceId name="memory" typename="ResourceId" width="8">168</ResourceId>
+					<uint name="start" typename="uint64_t" width="8">0</uint>
+					<enum name="refType" typename="FrameRefType" width="4" string="FrameRefType(5)">5</enum>
+				</struct>
+				<struct typename="MemRefInterval">
+					<ResourceId name="memory" typename="ResourceId" width="8">168</ResourceId>
+					<uint name="start" typename="uint64_t" width="8">24</uint>
+					<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+				</struct>
+			</array>
+		</chunk>
+		<chunk id="5" chunkIndex="30" name="Internal::Frame Metadata" length="16" threadID="44632" timestamp="5041008" duration="0">
+			<uint name="frameNumber" typename="uint32_t" width="4">475</uint>
+		</chunk>
+		<chunk id="4" chunkIndex="31" name="Internal::Beginning of Capture" length="844" threadID="44632" timestamp="5041009" duration="0">
+			<uint name="NumImages" typename="uint32_t" width="4" important="true">7</uint>
+			<ResourceId name="Image" typename="VkImage" width="8">97</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">1</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">256</uint>
+						<uint name="height" typename="uint32_t" width="4">128</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_R8_UNORM">9</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">107</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">4</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1</uint>
+						<uint name="height" typename="uint32_t" width="4">1</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_R8G8B8A8_UNORM">37</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">108</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">2</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1</uint>
+						<uint name="height" typename="uint32_t" width="4">1</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_R8G8B8A8_UINT">41</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">4294967295</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="Unknown previous layout">4294967295</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">117</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">1</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1000</uint>
+						<uint name="height" typename="uint32_t" width="4">1000</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">118</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">1</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1000</uint>
+						<uint name="height" typename="uint32_t" width="4">1000</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="Complete Write">2</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">119</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">1</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1000</uint>
+						<uint name="height" typename="uint32_t" width="4">1000</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_B8G8R8A8_SRGB">50</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_COLOR_BIT">1</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_PRESENT_SRC_KHR">1000001002</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="None">0</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+			<ResourceId name="Image" typename="VkImage" width="8">139</ResourceId>
+			<struct name="ImageState" typename="ImageState">
+				<struct name="imageInfo" typename="ImageInfo">
+					<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+					<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+					<uint name="sampleCount" typename="uint32_t" width="4">1</uint>
+					<struct name="extent" typename="VkExtent3D">
+						<uint name="width" typename="uint32_t" width="4">1000</uint>
+						<uint name="height" typename="uint32_t" width="4">1000</uint>
+						<uint name="depth" typename="uint32_t" width="4">1</uint>
+					</struct>
+					<enum name="format" typename="VkFormat" width="4" string="VK_FORMAT_D32_SFLOAT">126</enum>
+					<enum name="imageType" typename="VkImageType" width="4" string="VK_IMAGE_TYPE_2D">1</enum>
+					<enum name="initialLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_UNDEFINED">0</enum>
+					<enum name="sharingMode" typename="VkSharingMode" width="4" string="VK_SHARING_MODE_EXCLUSIVE">0</enum>
+				</struct>
+				<array name="subresourceStates">
+					<struct typename="ImageSubresourceStateForRange">
+						<struct name="range" typename="ImageSubresourceRange">
+							<enum name="aspectMask" typename="VkImageAspectFlags" width="4" string="VK_IMAGE_ASPECT_DEPTH_BIT">2</enum>
+							<uint name="baseMipLevel" typename="uint32_t" width="4">0</uint>
+							<uint name="levelCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseArrayLayer" typename="uint32_t" width="4">0</uint>
+							<uint name="layerCount" typename="uint32_t" width="4">1</uint>
+							<uint name="baseDepthSlice" typename="uint32_t" width="4">0</uint>
+							<uint name="sliceCount" typename="uint32_t" width="4">1</uint>
+						</struct>
+						<struct name="state" typename="ImageSubresourceState">
+							<uint name="oldQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<uint name="newQueueFamilyIndex" typename="uint32_t" width="4">0</uint>
+							<enum name="oldLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL">3</enum>
+							<enum name="newLayout" typename="VkImageLayout" width="4" string="VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL">3</enum>
+							<enum name="refType" typename="FrameRefType" width="4" string="Complete Write and Discard">6</enum>
+						</struct>
+					</struct>
+				</array>
+				<array name="oldQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+				<array name="newQueueFamilyTransfers" typename="VkImageMemoryBarrier" />
+			</struct>
+		</chunk>
+		<chunk id="1004" chunkIndex="32" name="vkUnmapMemory" length="120" threadID="44632" timestamp="4990705" duration="50">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<ResourceId name="memory" typename="VkDeviceMemory" width="8" important="true">168</ResourceId>
+			<uint name="MapOffset" typename="uint64_t" width="8">0</uint>
+			<uint name="MapSize" typename="uint64_t" width="8">24</uint>
+			<buffer name="MapData" typename="Byte Buffer" important="true" byteLength="24">0</buffer>
+		</chunk>
+		<chunk id="1029" chunkIndex="33" name="vkWaitForFences" length="48" threadID="44632" timestamp="5006898" duration="10">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<uint name="fenceCount" typename="uint32_t" width="4">1</uint>
+			<array name="pFences" important="true">
+				<ResourceId typename="VkFence" width="8">158</ResourceId>
+			</array>
+			<uint name="waitAll" typename="uint32_t" width="4">1</uint>
+			<uint name="timeout" typename="uint64_t" width="8" important="true">18446744073709551615</uint>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1028" chunkIndex="34" name="vkResetFences" length="36" threadID="44632" timestamp="5006944" duration="7">
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<uint name="fenceCount" typename="uint32_t" width="4">1</uint>
+			<array name="pFences" important="true">
+				<ResourceId typename="VkFence" width="8">158</ResourceId>
+			</array>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1037" chunkIndex="35" name="vkBeginCommandBuffer" length="55" threadID="44632" timestamp="5006954" duration="36">
+			<ResourceId name="CommandBuffer" typename="VkCommandBuffer" width="8" important="true">149</ResourceId>
+			<struct name="BeginInfo" typename="VkCommandBufferBeginInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO">42</enum>
+				<null name="pNext" typename="void *" />
+				<enum name="flags" typename="VkCommandBufferUsageFlags" width="4" string="VkCommandBufferUsageFlagBits(0)">0</enum>
+				<null name="pInheritanceInfo" typename="VkCommandBufferInheritanceInfo" important="true" />
+			</struct>
+			<ResourceId name="BakedCommandBuffer" typename="ResourceId" width="8">648</ResourceId>
+			<ResourceId name="device" typename="VkDevice" width="8">10</ResourceId>
+			<struct name="AllocateInfo" typename="VkCommandBufferAllocateInfo" hidden="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO">40</enum>
+				<null name="pNext" typename="void *" />
+				<ResourceId name="commandPool" typename="VkCommandPool" width="8" important="true">146</ResourceId>
+				<enum name="level" typename="VkCommandBufferLevel" width="4" important="true" string="VK_COMMAND_BUFFER_LEVEL_PRIMARY">0</enum>
+				<uint name="commandBufferCount" typename="uint32_t" width="4">1</uint>
+			</struct>
+		</chunk>
+		<chunk id="1045" chunkIndex="36" name="vkCmdBeginRenderPass" length="229" threadID="44632" timestamp="5007012" duration="93">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<struct name="RenderPassBegin" typename="VkRenderPassBeginInfo" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO">43</enum>
+				<null name="pNext" typename="void *" />
+				<ResourceId name="renderPass" typename="VkRenderPass" width="8" important="true">138</ResourceId>
+				<ResourceId name="framebuffer" typename="VkFramebuffer" width="8" important="true">144</ResourceId>
+				<struct name="renderArea" typename="VkRect2D">
+					<struct name="offset" typename="VkOffset2D">
+						<int name="x" typename="int32_t" width="4">0</int>
+						<int name="y" typename="int32_t" width="4">0</int>
+					</struct>
+					<struct name="extent" typename="VkExtent2D">
+						<uint name="width" typename="uint32_t" width="4">1000</uint>
+						<uint name="height" typename="uint32_t" width="4">1000</uint>
+					</struct>
+				</struct>
+				<uint name="clearValueCount" typename="uint32_t" width="4">2</uint>
+				<array name="pClearValues">
+					<struct typename="VkClearValue" union="true">
+						<struct name="color" typename="VkClearColorValue" union="true" importantchildren="true">
+							<array name="float32" fixedarray="true" important="true">
+								<float typename="float" width="4">0.10000000149011612</float>
+								<float typename="float" width="4">0.10000000149011612</float>
+								<float typename="float" width="4">0.10000000149011612</float>
+								<float typename="float" width="4">1</float>
+							</array>
+							<array name="int32" fixedarray="true">
+								<int typename="int32_t" width="4">1036831949</int>
+								<int typename="int32_t" width="4">1036831949</int>
+								<int typename="int32_t" width="4">1036831949</int>
+								<int typename="int32_t" width="4">1065353216</int>
+							</array>
+							<array name="uint32" fixedarray="true">
+								<uint typename="uint32_t" width="4">1036831949</uint>
+								<uint typename="uint32_t" width="4">1036831949</uint>
+								<uint typename="uint32_t" width="4">1036831949</uint>
+								<uint typename="uint32_t" width="4">1065353216</uint>
+							</array>
+						</struct>
+						<struct name="depthStencil" typename="VkClearDepthStencilValue">
+							<float name="depth" typename="float" width="4">0.10000000149011612</float>
+							<uint name="stencil" typename="uint32_t" width="4">1036831949</uint>
+						</struct>
+					</struct>
+					<struct typename="VkClearValue" union="true">
+						<struct name="color" typename="VkClearColorValue" union="true" importantchildren="true">
+							<array name="float32" fixedarray="true" important="true">
+								<float typename="float" width="4">1</float>
+								<float typename="float" width="4">0</float>
+								<float typename="float" width="4">0</float>
+								<float typename="float" width="4">0</float>
+							</array>
+							<array name="int32" fixedarray="true">
+								<int typename="int32_t" width="4">1065353216</int>
+								<int typename="int32_t" width="4">0</int>
+								<int typename="int32_t" width="4">0</int>
+								<int typename="int32_t" width="4">0</int>
+							</array>
+							<array name="uint32" fixedarray="true">
+								<uint typename="uint32_t" width="4">1065353216</uint>
+								<uint typename="uint32_t" width="4">0</uint>
+								<uint typename="uint32_t" width="4">0</uint>
+								<uint typename="uint32_t" width="4">0</uint>
+							</array>
+						</struct>
+						<struct name="depthStencil" typename="VkClearDepthStencilValue">
+							<float name="depth" typename="float" width="4">1</float>
+							<uint name="stencil" typename="uint32_t" width="4">0</uint>
+						</struct>
+					</struct>
+				</array>
+			</struct>
+			<enum name="contents" typename="VkSubpassContents" width="4" string="VK_SUBPASS_CONTENTS_INLINE">0</enum>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1049" chunkIndex="37" name="vkCmdBindPipeline" length="28" threadID="44632" timestamp="5007118" duration="12">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<enum name="pipelineBindPoint" typename="VkPipelineBindPoint" width="4" string="VK_PIPELINE_BIND_POINT_GRAPHICS">0</enum>
+			<ResourceId name="pipeline" typename="VkPipeline" width="8" important="true">166</ResourceId>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1070" chunkIndex="38" name="vkCmdPushConstants" length="168" threadID="44632" timestamp="5007137" duration="8">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<ResourceId name="layout" typename="VkPipelineLayout" width="8">165</ResourceId>
+			<enum name="stageFlags" typename="VkShaderStageFlags" width="4" important="true" string="VK_SHADER_STAGE_VERTEX_BIT">1</enum>
+			<uint name="start" typename="uint32_t" width="4">0</uint>
+			<uint name="length" typename="uint32_t" width="4">64</uint>
+			<buffer name="values" typename="Byte Buffer" important="true" byteLength="64">0</buffer>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1060" chunkIndex="39" name="vkCmdBindVertexBuffers" length="56" threadID="44632" timestamp="5007148" duration="7">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<uint name="firstBinding" typename="uint32_t" width="4" important="true">0</uint>
+			<uint name="bindingCount" typename="uint32_t" width="4">1</uint>
+			<array name="pBuffers" important="true">
+				<ResourceId typename="VkBuffer" width="8">167</ResourceId>
+			</array>
+			<array name="pOffsets">
+				<uint typename="uint64_t" width="8">0</uint>
+			</array>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1083" chunkIndex="40" name="vkCmdDraw" length="32" threadID="44632" timestamp="5007159" duration="24">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<uint name="vertexCount" typename="uint32_t" width="4" important="true">2</uint>
+			<uint name="instanceCount" typename="uint32_t" width="4" important="true">1</uint>
+			<uint name="firstVertex" typename="uint32_t" width="4">0</uint>
+			<uint name="firstInstance" typename="uint32_t" width="4">0</uint>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1048" chunkIndex="41" name="vkCmdEndRenderPass" length="16" threadID="44632" timestamp="5007184" duration="5">
+			<ResourceId name="commandBuffer" typename="VkCommandBuffer" width="8">149</ResourceId>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1038" chunkIndex="42" name="vkEndCommandBuffer" length="16" threadID="44632" timestamp="5007194" duration="3">
+			<ResourceId name="CommandBuffer" typename="VkCommandBuffer" width="8" important="true">149</ResourceId>
+			<ResourceId name="BakedCommandBuffer" typename="ResourceId" width="8">648</ResourceId>
+		</chunk>
+		<chunk id="1041" chunkIndex="43" name="vkQueueSubmit" length="113" threadID="44632" timestamp="5007248" duration="57">
+			<ResourceId name="queue" typename="VkQueue" width="8">114</ResourceId>
+			<uint name="submitCount" typename="uint32_t" width="4">1</uint>
+			<array name="pSubmits" important="true">
+				<struct typename="VkSubmitInfo" importantchildren="true">
+					<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_SUBMIT_INFO">4</enum>
+					<null name="pNext" typename="void *" />
+					<uint name="waitSemaphoreCount" typename="uint32_t" width="4">1</uint>
+					<array name="pWaitSemaphores">
+						<ResourceId typename="VkSemaphore" width="8">156</ResourceId>
+					</array>
+					<array name="pWaitDstStageMask">
+						<enum typename="VkPipelineStageFlags" width="4" string="VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT">1024</enum>
+					</array>
+					<uint name="commandBufferCount" typename="uint32_t" width="4">1</uint>
+					<array name="pCommandBuffers" important="true">
+						<ResourceId typename="VkCommandBuffer" width="8">149</ResourceId>
+					</array>
+					<uint name="signalSemaphoreCount" typename="uint32_t" width="4">1</uint>
+					<array name="pSignalSemaphores">
+						<ResourceId typename="VkSemaphore" width="8">157</ResourceId>
+					</array>
+				</struct>
+			</array>
+			<ResourceId name="fence" typename="VkFence" width="8">158</ResourceId>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="1139" chunkIndex="44" name="vkQueuePresentKHR" length="89" threadID="44632" timestamp="5007350" duration="121">
+			<ResourceId name="queue" typename="VkQueue" width="8">114</ResourceId>
+			<struct name="PresentInfo" typename="VkPresentInfoKHR" important="true" importantchildren="true">
+				<enum name="sType" typename="VkStructureType" width="4" string="VK_STRUCTURE_TYPE_PRESENT_INFO_KHR">1000001001</enum>
+				<null name="pNext" typename="void *" />
+				<uint name="waitSemaphoreCount" typename="uint32_t" width="4">1</uint>
+				<array name="pWaitSemaphores">
+					<ResourceId typename="VkSemaphore" width="8">157</ResourceId>
+				</array>
+				<uint name="swapchainCount" typename="uint32_t" width="4">1</uint>
+				<array name="pSwapchains" important="true">
+					<ResourceId typename="VkSwapchainKHR" width="8">115</ResourceId>
+				</array>
+				<array name="pImageIndices" important="true">
+					<uint typename="uint32_t" width="4">1</uint>
+				</array>
+				<array name="pResults" typename="VkResult" />
+			</struct>
+			<ResourceId name="PresentedImage" typename="ResourceId" width="8" hidden="true">118</ResourceId>
+			<array name="DebugMessages" typename="DebugMessage" hidden="true" />
+		</chunk>
+		<chunk id="6" chunkIndex="45" name="Internal::End of Capture" length="8" threadID="44632" timestamp="5007524" duration="0">
+			<ResourceId name="PresentedImage" typename="VkImage" width="8">118</ResourceId>
+		</chunk>
+	</chunks>
+</rdc>
