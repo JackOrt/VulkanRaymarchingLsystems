@@ -1,12 +1,11 @@
 #include "VulkanRaymarchApp.hpp"
-
 #include <stdexcept>
 #include <iostream>
-#include <fstream>
 #include <set>
 #include <cmath>
 #include <algorithm>
-#include <random> // BFS expansions
+#include "BFSSystem.hpp"   // for generateRandomBFSSystem()
+#include "FileUtils.hpp"   // for readFile()
 
 #ifdef _WIN32
 #ifndef NOMINMAX
@@ -14,279 +13,61 @@
 #endif
 #endif
 
-//-----------------------------------------------------------
-// readFile => load SPIR-V
-//-----------------------------------------------------------
-static std::vector<char> readFile(const std::string& filename)
+//===========================================================
+// Utility: createDebugUtilsMessengerEXT, destroyDebugUtilsMessengerEXT
+//===========================================================
+VkResult VulkanRaymarchApp::createDebugUtilsMessengerEXT(
+    VkInstance instance,
+    const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+    const VkAllocationCallbacks* pAllocator,
+    VkDebugUtilsMessengerEXT* pDebugMessenger)
 {
-    std::ifstream file(filename, std::ios::ate | std::ios::binary);
-    if (!file.is_open()) {
-        throw std::runtime_error("Cannot open file: " + filename);
+    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (func) {
+        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
     }
-    size_t fileSize = (size_t)file.tellg();
-    std::vector<char> buffer(fileSize);
-    file.seekg(0);
-    file.read(buffer.data(), fileSize);
-    file.close();
-    return buffer;
+    return VK_ERROR_EXTENSION_NOT_PRESENT;
 }
 
-//===========================================================
-// BFS generation => store BFS depth in CPUBranch::bfsDepth
-// We'll define child branches up to depth=5
-//===========================================================
-std::vector<CPUBranch> VulkanRaymarchApp::generateRandomBFSSystem()
+void VulkanRaymarchApp::destroyDebugUtilsMessengerEXT(
+    VkInstance instance,
+    VkDebugUtilsMessengerEXT dbg,
+    const VkAllocationCallbacks* pAllocator)
 {
-    std::vector<CPUBranch> results;
-    results.reserve(1024);
-
-    static std::random_device rd;
-    static std::mt19937 rng(rd());
-    std::uniform_real_distribution<float> angleDist(0.3f, 1.0f);
-    std::uniform_real_distribution<float> signDist(0.f, 1.f);
-    std::uniform_real_distribution<float> branchProb(0.f, 1.f);
-
-    struct Node {
-        float sx, sy, sz;
-        float ex, ey, ez;
-        float radius;
-        float bfsD;
-        int depth;
-    };
-    std::vector<Node> stack;
-    stack.reserve(512);
-
-    // trunk BFS=0
-    stack.push_back({ 0.f,-1.f,0.f, 0.f,0.f,0.f, 0.06f, 0.f, 5 });
-
-    auto rotZ = [&](float& x, float& y, float a) {
-        float c = cos(a), s = sin(a);
-        float rx = c * x - s * y;
-        float ry = s * x + c * y;
-        x = rx; y = ry;
-        };
-    auto rotX = [&](float& y, float& z, float a) {
-        float c = cos(a), s = sin(a);
-        float ry = c * y - s * z;
-        float rz = s * y + c * z;
-        y = ry; z = rz;
-        };
-
-    while (!stack.empty()) {
-        auto n = stack.back();
-        stack.pop_back();
-
-        CPUBranch br{};
-        br.startX = n.sx; br.startY = n.sy; br.startZ = n.sz;
-        br.endX = n.ex; br.endY = n.ey;   br.endZ = n.ez;
-        br.radius = n.radius;
-        br.bfsDepth = n.bfsD;
-        results.push_back(br);
-
-        if (n.depth > 1) {
-            float p = branchProb(rng);
-            int childCount = (p < 0.3f) ? 1 : 2;
-
-            float vx = n.ex - n.sx;
-            float vy = n.ey - n.sy;
-            float vz = n.ez - n.sz;
-            float length = std::sqrt(vx * vx + vy * vy + vz * vz);
-            if (length < 1e-6f) continue;
-            vx /= length; vy /= length; vz /= length;
-
-            float childLen = 0.8f * length; // bigger for visibility
-            float newRad = n.radius * 0.7f;
-
-            for (int i = 0;i < childCount;i++) {
-                float a1 = angleDist(rng);
-                float a2 = angleDist(rng);
-                if (signDist(rng) > 0.5f) a1 = -a1;
-                if (signDist(rng) > 0.5f) a2 = -a2;
-
-                float cx = vx, cy = vy, cz = vz;
-                rotZ(cx, cy, a1);
-                rotX(cy, cz, a2);
-
-                Node child;
-                child.sx = n.ex; child.sy = n.ey; child.sz = n.ez;
-                child.ex = n.ex + cx * childLen;
-                child.ey = n.ey + cy * childLen;
-                child.ez = n.ez + cz * childLen;
-                child.radius = newRad;
-                child.bfsD = n.bfsD + 1.f;
-                child.depth = n.depth - 1;
-                stack.push_back(child);
-            }
-        }
-    }
-    return results;
-}
-
-//===========================================================
-// createBranchBuffer => 8 floats each
-//===========================================================
-void VulkanRaymarchApp::createBranchBuffer(const std::vector<CPUBranch>& branches,
-    VkBuffer& outBuffer,
-    VkDeviceMemory& outMemory,
-    uint32_t& numBranches)
-{
-    std::vector<CPUBranch> safe = branches;
-    if (safe.empty()) {
-        safe.resize(1);
-    }
-    numBranches = (uint32_t)safe.size();
-    VkDeviceSize bufSize = numBranches * (8 * sizeof(float));
-
-    if (outBuffer != VK_NULL_HANDLE) {
-        vkDestroyBuffer(m_device, outBuffer, nullptr);
-        outBuffer = VK_NULL_HANDLE;
-    }
-    if (outMemory != VK_NULL_HANDLE) {
-        vkFreeMemory(m_device, outMemory, nullptr);
-        outMemory = VK_NULL_HANDLE;
-    }
-
-    VkBufferCreateInfo bci{};
-    bci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    bci.size = bufSize;
-    bci.usage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
-    bci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-
-    if (vkCreateBuffer(m_device, &bci, nullptr, &outBuffer) != VK_SUCCESS) {
-        throw std::runtime_error("failed to create branch buffer");
-    }
-    VkMemoryRequirements memReq;
-    vkGetBufferMemoryRequirements(m_device, outBuffer, &memReq);
-
-    VkPhysicalDeviceMemoryProperties mp;
-    vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &mp);
-
-    VkMemoryAllocateInfo mai{};
-    mai.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    mai.allocationSize = memReq.size;
-
-    bool found = false;
-    for (uint32_t i = 0;i < mp.memoryTypeCount;i++) {
-        if ((memReq.memoryTypeBits & (1 << i)) &&
-            ((mp.memoryTypes[i].propertyFlags & (VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)) ==
-                (VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)))
-        {
-            mai.memoryTypeIndex = i;
-            found = true;
-            break;
-        }
-    }
-    if (!found) throw std::runtime_error("No suitable memory type for branch buffer!");
-    if (vkAllocateMemory(m_device, &mai, nullptr, &outMemory) != VK_SUCCESS) {
-        throw std::runtime_error("failed to alloc branch buffer mem");
-    }
-    if (vkBindBufferMemory(m_device, outBuffer, outMemory, 0) != VK_SUCCESS) {
-        throw std::runtime_error("failed to bind branch buffer mem");
-    }
-
-    // upload
-    void* dataPtr = nullptr;
-    vkMapMemory(m_device, outMemory, 0, bufSize, 0, &dataPtr);
-    float* fPtr = (float*)dataPtr;
-    for (auto& b : safe) {
-        *fPtr++ = b.startX;
-        *fPtr++ = b.startY;
-        *fPtr++ = b.startZ;
-        *fPtr++ = b.radius;
-        *fPtr++ = b.endX;
-        *fPtr++ = b.endY;
-        *fPtr++ = b.endZ;
-        *fPtr++ = b.bfsDepth;
-    }
-    vkUnmapMemory(m_device, outMemory);
-}
-
-void VulkanRaymarchApp::updateDescriptorSetsWithBranchBuffers()
-{
-    for (auto ds : m_descriptorSets) {
-        VkDescriptorBufferInfo oldBI{};
-        oldBI.buffer = m_branchBufferOld;
-        oldBI.offset = 0;
-        oldBI.range = VK_WHOLE_SIZE;
-
-        VkDescriptorBufferInfo newBI{};
-        newBI.buffer = m_branchBufferNew;
-        newBI.offset = 0;
-        newBI.range = VK_WHOLE_SIZE;
-
-        VkWriteDescriptorSet w1{};
-        w1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        w1.dstSet = ds;
-        w1.dstBinding = 1;
-        w1.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        w1.descriptorCount = 1;
-        w1.pBufferInfo = &oldBI;
-
-        VkWriteDescriptorSet w2{};
-        w2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        w2.dstSet = ds;
-        w2.dstBinding = 2;
-        w2.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        w2.descriptorCount = 1;
-        w2.pBufferInfo = &newBI;
-
-        VkWriteDescriptorSet wr[2] = { w1,w2 };
-        vkUpdateDescriptorSets(m_device, 2, wr, 0, nullptr);
+    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)
+        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (func) {
+        func(instance, dbg, pAllocator);
     }
 }
 
 //===========================================================
-// checkAnimation => each 5-second BFS cycle
-// We'll do overlapping BFS growth in the shader
-// also compute BFS max
+// Validation debug callback
 //===========================================================
-void VulkanRaymarchApp::checkAnimation()
+VKAPI_ATTR VkBool32 VKAPI_CALL VulkanRaymarchApp::debugCallback(
+    VkDebugUtilsMessageSeverityFlagBitsEXT severity,
+    VkDebugUtilsMessageTypeFlagsEXT types,
+    const VkDebugUtilsMessengerCallbackDataEXT* data,
+    void* user)
 {
-    float now = (float)std::chrono::duration<double>(
-        std::chrono::steady_clock::now() - m_startTime).count();
-    float elapsed = now - m_cycleStart;
-    const float DURATION = 5.f;
-
-    if (elapsed >= DURATION) {
-        m_cycleStart = now;
-        elapsed = 0.f;
-
-        // old => empty
-        m_cpuBranchesOld.clear();
-        createBranchBuffer(m_cpuBranchesOld, m_branchBufferOld, m_branchBufferOldMem, m_numBranchesOld);
-
-        // new => BFS
-        m_cpuBranchesNew = generateRandomBFSSystem();
-        createBranchBuffer(m_cpuBranchesNew, m_branchBufferNew, m_branchBufferNewMem, m_numBranchesNew);
-
-        updateDescriptorSetsWithBranchBuffers();
-    }
-
-    m_alpha = std::min(elapsed / DURATION, 1.0f);
-
-    // BFS max
-    float maxB = 0.f;
-    for (auto& b : m_cpuBranchesNew) {
-        if (b.bfsDepth > maxB) maxB = b.bfsDepth;
-    }
-    m_maxBFS = maxB;
+    std::cerr << "[Validation] " << data->pMessage << "\n";
+    return VK_FALSE;
 }
 
 //===========================================================
 // Constructor / Destructor
 //===========================================================
 VulkanRaymarchApp::VulkanRaymarchApp(uint32_t width, uint32_t height, const std::string& title)
-    : m_width(width), m_height(height), m_windowTitle(title)
+    : m_width(width), m_height(height), m_windowTitle(title), m_debugColoring(false)
 {
     initWindow();
     initVulkan();
     m_startTime = std::chrono::steady_clock::now();
 
-    // old => empty
     m_cpuBranchesOld.clear();
     createBranchBuffer(m_cpuBranchesOld, m_branchBufferOld, m_branchBufferOldMem, m_numBranchesOld);
 
-    // new => BFS final
     m_cpuBranchesNew = generateRandomBFSSystem();
     createBranchBuffer(m_cpuBranchesNew, m_branchBufferNew, m_branchBufferNewMem, m_numBranchesNew);
 
@@ -323,7 +104,7 @@ VulkanRaymarchApp::~VulkanRaymarchApp()
 
     vkDestroyCommandPool(m_device, m_commandPool, nullptr);
 
-    for (size_t i = 0;i < m_swapChainImages.size();i++) {
+    for (size_t i = 0; i < m_swapChainImages.size(); i++) {
         vkDestroySemaphore(m_device, m_imageAvailableSemaphores[i], nullptr);
         vkDestroySemaphore(m_device, m_renderFinishedSemaphores[i], nullptr);
         vkDestroyFence(m_device, m_inFlightFences[i], nullptr);
@@ -341,24 +122,15 @@ VulkanRaymarchApp::~VulkanRaymarchApp()
 }
 
 //===========================================================
-// run-> mainLoop
+// run -> mainLoop
 //===========================================================
 void VulkanRaymarchApp::run()
 {
     mainLoop();
 }
 
-void VulkanRaymarchApp::mainLoop()
-{
-    while (!glfwWindowShouldClose(m_window)) {
-        glfwPollEvents();
-        drawFrame();
-    }
-    vkDeviceWaitIdle(m_device);
-}
-
 //===========================================================
-// Window
+// initWindow / cleanupWindow
 //===========================================================
 void VulkanRaymarchApp::initWindow()
 {
@@ -377,6 +149,16 @@ void VulkanRaymarchApp::initWindow()
         auto app = reinterpret_cast<VulkanRaymarchApp*>(glfwGetWindowUserPointer(wnd));
         app->m_framebufferResized = true;
         });
+    // Set key callback to toggle debug coloring (using D key)
+    glfwSetKeyCallback(m_window, [](GLFWwindow* wnd, int key, int scancode, int action, int mods) {
+        if (action == GLFW_PRESS) {
+            VulkanRaymarchApp* app = reinterpret_cast<VulkanRaymarchApp*>(glfwGetWindowUserPointer(wnd));
+            if (key == GLFW_KEY_D) {
+                app->m_debugColoring = !app->m_debugColoring;
+                std::cout << "Debug coloring toggled: " << (app->m_debugColoring ? "ON" : "OFF") << std::endl;
+            }
+        }
+        });
 }
 
 void VulkanRaymarchApp::cleanupWindow()
@@ -386,28 +168,19 @@ void VulkanRaymarchApp::cleanupWindow()
 }
 
 //===========================================================
-// initVulkan => calls all the missing methods
+// mainLoop -> drawFrame
 //===========================================================
-void VulkanRaymarchApp::initVulkan()
+void VulkanRaymarchApp::mainLoop()
 {
-    createInstance();
-    setupDebugMessenger();
-    createSurface();
-    pickPhysicalDevice();
-    createLogicalDevice();
-    createSwapChain();
-    createSwapChainImageViews();
-    createCommandPool();
-    createComputeResources();
-    createDescriptorSetLayout();
-    createComputePipeline();
-    createDescriptorPoolAndSets();
-    createCommandBuffers();
-    createSyncObjects();
+    while (!glfwWindowShouldClose(m_window)) {
+        glfwPollEvents();
+        drawFrame();
+    }
+    vkDeviceWaitIdle(m_device);
 }
 
 //===========================================================
-// drawFrame => BFS approach
+// drawFrame
 //===========================================================
 void VulkanRaymarchApp::drawFrame()
 {
@@ -471,7 +244,39 @@ void VulkanRaymarchApp::drawFrame()
 }
 
 //===========================================================
-// recordCommandBuffer => we read BFS data, do compute pass
+// checkAnimation => BFS overlap cycle
+//===========================================================
+void VulkanRaymarchApp::checkAnimation()
+{
+    float now = (float)std::chrono::duration<double>(
+        std::chrono::steady_clock::now() - m_startTime).count();
+    float elapsed = now - m_cycleStart;
+    const float DURATION = 5.f;
+
+    if (elapsed >= DURATION) {
+        m_cycleStart = now;
+        elapsed = 0.f;
+
+        m_cpuBranchesOld = m_cpuBranchesNew;
+        createBranchBuffer(m_cpuBranchesOld, m_branchBufferOld, m_branchBufferOldMem, m_numBranchesOld);
+
+        m_cpuBranchesNew = generateRandomBFSSystem();
+        createBranchBuffer(m_cpuBranchesNew, m_branchBufferNew, m_branchBufferNewMem, m_numBranchesNew);
+
+        updateDescriptorSetsWithBranchBuffers();
+    }
+
+    m_alpha = std::min(elapsed / DURATION, 1.0f);
+
+    float maxB = 0.f;
+    for (auto& b : m_cpuBranchesNew) {
+        if (b.bfsDepth > maxB) maxB = b.bfsDepth;
+    }
+    m_maxBFS = maxB;
+}
+
+//===========================================================
+// recordCommandBuffer => compute pass & copy to swapchain
 //===========================================================
 void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageIndex)
 {
@@ -479,7 +284,7 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
     bi.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
     vkBeginCommandBuffer(cmd, &bi);
 
-    // 1) storage => GENERAL
+    // Transition storage image to GENERAL layout.
     {
         VkImageMemoryBarrier bar{};
         bar.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -500,25 +305,23 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
             0, 0, nullptr, 0, nullptr, 1, &bar);
     }
 
-    // 2) bind pipeline
     vkCmdBindPipeline(cmd, VK_PIPELINE_BIND_POINT_COMPUTE, m_computePipeline);
     vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINT_COMPUTE,
         m_computePipelineLayout, 0, 1,
-        &m_descriptorSets[imageIndex],
-        0, nullptr);
+        &m_descriptorSets[imageIndex], 0, nullptr);
 
     updateUniforms();
 
     float now = (float)std::chrono::duration<double>(
         std::chrono::steady_clock::now() - m_startTime).count();
 
-    // row0 => (time, alpha, width, height)
-    // row1 => (#old, #new, maxBFS, 0)
+    // Push constants: row0 = (time, alpha, width, height)
+    // row1 = (#old, #new, maxBFS, debugToggle)
     float pushC[8] = {
         now, m_alpha,
         (float)m_swapChainExtent.width, (float)m_swapChainExtent.height,
         (float)m_numBranchesOld, (float)m_numBranchesNew,
-        m_maxBFS, 0.f
+        m_maxBFS, (m_debugColoring ? 1.0f : 0.0f)
     };
     vkCmdPushConstants(cmd, m_computePipelineLayout, VK_SHADER_STAGE_COMPUTE_BIT,
         0, sizeof(pushC), pushC);
@@ -527,7 +330,7 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
     uint32_t gy = (m_swapChainExtent.height + 7) / 8;
     vkCmdDispatch(cmd, gx, gy, 1);
 
-    // 3) => TRANSFER_SRC
+    // Transition storage image to TRANSFER_SRC.
     {
         VkImageMemoryBarrier bar{};
         bar.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -548,7 +351,7 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
             0, 0, nullptr, 0, nullptr, 1, &bar);
     }
 
-    // 4) => TRANSFER_DST
+    // Transition swapchain image to TRANSFER_DST.
     {
         VkImage swapImg = m_swapChainImages[imageIndex];
         VkImageMemoryBarrier bar{};
@@ -570,7 +373,7 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
             0, 0, nullptr, 0, nullptr, 1, &bar);
     }
 
-    // 5) copy
+    // Copy from storage image to swapchain image.
     {
         VkImageCopy ic{};
         ic.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -586,7 +389,7 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
             1, &ic);
     }
 
-    // 6) => PRESENT_SRC
+    // Transition swapchain image to PRESENT_SRC.
     {
         VkImage swapImg = m_swapChainImages[imageIndex];
         VkImageMemoryBarrier bar{};
@@ -611,118 +414,157 @@ void VulkanRaymarchApp::recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageI
     vkEndCommandBuffer(cmd);
 }
 
+//===========================================================
+// updateUniforms (using push constants only)
+//===========================================================
 void VulkanRaymarchApp::updateUniforms()
 {
-    // push constants only
+    // No additional uniform buffer updates needed; using push constants.
 }
 
-//==========================================================
-// cleanupSwapChain-> recreateSwapChain
-//==========================================================
-void VulkanRaymarchApp::cleanupSwapChain()
+//===========================================================
+// createBranchBuffer (with wait for idle to avoid buffer in use)
+//===========================================================
+void VulkanRaymarchApp::createBranchBuffer(const std::vector<CPUBranch>& branches,
+    VkBuffer& outBuffer, VkDeviceMemory& outMemory,
+    uint32_t& numBranches)
 {
-    for (auto iv : m_swapChainImageViews) {
-        vkDestroyImageView(m_device, iv, nullptr);
-    }
-    vkDestroySwapchainKHR(m_device, m_swapChain, nullptr);
-}
-
-void VulkanRaymarchApp::recreateSwapChain()
-{
-    int w = 0, h = 0;
-    glfwGetFramebufferSize(m_window, &w, &h);
-    while (w == 0 || h == 0) {
-        glfwGetFramebufferSize(m_window, &w, &h);
-        glfwWaitEvents();
-    }
     vkDeviceWaitIdle(m_device);
 
-    cleanupSwapChain();
+    std::vector<CPUBranch> safe = branches;
+    if (safe.empty()) {
+        safe.resize(1);
+    }
+    numBranches = static_cast<uint32_t>(safe.size());
+    VkDeviceSize bufSize = numBranches * (9 * sizeof(float));
+
+    if (outBuffer != VK_NULL_HANDLE) {
+        vkDestroyBuffer(m_device, outBuffer, nullptr);
+        outBuffer = VK_NULL_HANDLE;
+    }
+    if (outMemory != VK_NULL_HANDLE) {
+        vkFreeMemory(m_device, outMemory, nullptr);
+        outMemory = VK_NULL_HANDLE;
+    }
+
+    VkBufferCreateInfo bci{};
+    bci.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+    bci.size = bufSize;
+    bci.usage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
+    bci.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+    if (vkCreateBuffer(m_device, &bci, nullptr, &outBuffer) != VK_SUCCESS) {
+        throw std::runtime_error("failed to create branch buffer");
+    }
+    VkMemoryRequirements memReq;
+    vkGetBufferMemoryRequirements(m_device, outBuffer, &memReq);
+
+    VkPhysicalDeviceMemoryProperties mp;
+    vkGetPhysicalDeviceMemoryProperties(m_physicalDevice, &mp);
+
+    VkMemoryAllocateInfo mai{};
+    mai.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    mai.allocationSize = memReq.size;
+
+    bool found = false;
+    for (uint32_t i = 0; i < mp.memoryTypeCount; i++) {
+        if ((memReq.memoryTypeBits & (1 << i)) &&
+            ((mp.memoryTypes[i].propertyFlags &
+                (VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)) ==
+                (VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)))
+        {
+            mai.memoryTypeIndex = i;
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        throw std::runtime_error("No suitable memory type for branch buffer!");
+
+    if (vkAllocateMemory(m_device, &mai, nullptr, &outMemory) != VK_SUCCESS) {
+        throw std::runtime_error("failed to alloc branch buffer mem");
+    }
+    if (vkBindBufferMemory(m_device, outBuffer, outMemory, 0) != VK_SUCCESS) {
+        throw std::runtime_error("failed to bind branch buffer mem");
+    }
+
+    void* dataPtr = nullptr;
+    vkMapMemory(m_device, outMemory, 0, bufSize, 0, &dataPtr);
+    float* fPtr = static_cast<float*>(dataPtr);
+    for (auto& b : safe) {
+        *fPtr++ = b.startX;
+        *fPtr++ = b.startY;
+        *fPtr++ = b.startZ;
+        *fPtr++ = b.radius;
+        *fPtr++ = b.endX;
+        *fPtr++ = b.endY;
+        *fPtr++ = b.endZ;
+        *fPtr++ = b.bfsDepth;
+        union { float f; uint32_t u; } uconv;
+        uconv.u = (b.parentIndex < 0) ? 0xffffffffu : static_cast<uint32_t>(b.parentIndex);
+        *fPtr++ = uconv.f;
+    }
+    vkUnmapMemory(m_device, outMemory);
+}
+
+void VulkanRaymarchApp::updateDescriptorSetsWithBranchBuffers()
+{
+    for (auto ds : m_descriptorSets) {
+        VkDescriptorBufferInfo oldBI{};
+        oldBI.buffer = m_branchBufferOld;
+        oldBI.offset = 0;
+        oldBI.range = VK_WHOLE_SIZE;
+
+        VkDescriptorBufferInfo newBI{};
+        newBI.buffer = m_branchBufferNew;
+        newBI.offset = 0;
+        newBI.range = VK_WHOLE_SIZE;
+
+        VkWriteDescriptorSet w1{};
+        w1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        w1.dstSet = ds;
+        w1.dstBinding = 1;
+        w1.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        w1.descriptorCount = 1;
+        w1.pBufferInfo = &oldBI;
+
+        VkWriteDescriptorSet w2{};
+        w2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        w2.dstSet = ds;
+        w2.dstBinding = 2;
+        w2.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        w2.descriptorCount = 1;
+        w2.pBufferInfo = &newBI;
+
+        VkWriteDescriptorSet wr[2] = { w1, w2 };
+        vkUpdateDescriptorSets(m_device, 2, wr, 0, nullptr);
+    }
+}
+
+//===========================================================
+// initVulkan
+//===========================================================
+void VulkanRaymarchApp::initVulkan()
+{
+    createInstance();
+    setupDebugMessenger();
+    createSurface();
+    pickPhysicalDevice();
+    createLogicalDevice();
     createSwapChain();
     createSwapChainImageViews();
-
-    vkDestroyImage(m_device, m_storageImage, nullptr);
-    vkDestroyImageView(m_device, m_storageImageView, nullptr);
-    vkFreeMemory(m_device, m_storageImageMemory, nullptr);
-    createStorageImage();
-
-    vkDestroyDescriptorPool(m_device, m_descriptorPool, nullptr);
+    createCommandPool();
+    createComputeResources();
+    createDescriptorSetLayout();
+    createComputePipeline();
     createDescriptorPoolAndSets();
-    updateDescriptorSetsWithBranchBuffers();
-
-    vkFreeCommandBuffers(m_device, m_commandPool, (uint32_t)m_commandBuffers.size(),
-        m_commandBuffers.data());
     createCommandBuffers();
+    createSyncObjects();
 }
 
-//==========================================================
-// The standard missing Vulkan methods
-//==========================================================
-bool VulkanRaymarchApp::checkValidationLayerSupport()
-{
-    uint32_t layerCount = 0;
-    vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
-    std::vector<VkLayerProperties> layers(layerCount);
-    vkEnumerateInstanceLayerProperties(&layerCount, layers.data());
-    for (auto& req : m_validationLayers) {
-        bool found = false;
-        for (auto& l : layers) {
-            if (std::strcmp(l.layerName, req) == 0) {
-                found = true; break;
-            }
-        }
-        if (!found) return false;
-    }
-    return true;
-}
-
-std::vector<const char*> VulkanRaymarchApp::getRequiredExtensions()
-{
-    uint32_t glfwCount = 0;
-    const char** glfwExt = glfwGetRequiredInstanceExtensions(&glfwCount);
-    std::vector<const char*> ret(glfwExt, glfwExt + glfwCount);
-    if (m_enableValidationLayers) {
-        ret.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-    }
-    return ret;
-}
-
-VKAPI_ATTR VkBool32 VKAPI_CALL VulkanRaymarchApp::debugCallback(
-    VkDebugUtilsMessageSeverityFlagBitsEXT severity,
-    VkDebugUtilsMessageTypeFlagsEXT types,
-    const VkDebugUtilsMessengerCallbackDataEXT* data,
-    void* user)
-{
-    std::cerr << "[Validation] " << data->pMessage << "\n";
-    return VK_FALSE;
-}
-
-VkResult VulkanRaymarchApp::createDebugUtilsMessengerEXT(
-    VkInstance instance,
-    const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
-    const VkAllocationCallbacks* pAllocator,
-    VkDebugUtilsMessengerEXT* pDebugMessenger)
-{
-    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (func) {
-        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-    }
-    return VK_ERROR_EXTENSION_NOT_PRESENT;
-}
-
-void VulkanRaymarchApp::destroyDebugUtilsMessengerEXT(
-    VkInstance instance,
-    VkDebugUtilsMessengerEXT dbg,
-    const VkAllocationCallbacks* pAllocator)
-{
-    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)
-        vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if (func) {
-        func(instance, dbg, pAllocator);
-    }
-}
-
+//===========================================================
+// createInstance
+//===========================================================
 void VulkanRaymarchApp::createInstance()
 {
     if (m_enableValidationLayers && !checkValidationLayerSupport()) {
@@ -742,10 +584,10 @@ void VulkanRaymarchApp::createInstance()
     VkInstanceCreateInfo ci{};
     ci.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     ci.pApplicationInfo = &ai;
-    ci.enabledExtensionCount = (uint32_t)exts.size();
+    ci.enabledExtensionCount = static_cast<uint32_t>(exts.size());
     ci.ppEnabledExtensionNames = exts.data();
     if (m_enableValidationLayers) {
-        ci.enabledLayerCount = (uint32_t)m_validationLayers.size();
+        ci.enabledLayerCount = static_cast<uint32_t>(m_validationLayers.size());
         ci.ppEnabledLayerNames = m_validationLayers.data();
     }
     else {
@@ -772,6 +614,9 @@ void VulkanRaymarchApp::createInstance()
     }
 }
 
+//===========================================================
+// setupDebugMessenger
+//===========================================================
 void VulkanRaymarchApp::setupDebugMessenger()
 {
     if (!m_enableValidationLayers) return;
@@ -793,6 +638,9 @@ void VulkanRaymarchApp::setupDebugMessenger()
     }
 }
 
+//===========================================================
+// pickPhysicalDevice
+//===========================================================
 void VulkanRaymarchApp::pickPhysicalDevice()
 {
     uint32_t devCount = 0;
@@ -808,7 +656,10 @@ void VulkanRaymarchApp::pickPhysicalDevice()
         vkGetPhysicalDeviceQueueFamilyProperties(d, &qCount, nullptr);
         std::vector<VkQueueFamilyProperties> qProps(qCount);
         vkGetPhysicalDeviceQueueFamilyProperties(d, &qCount, qProps.data());
-        bool foundCompute = false, foundGraphics = false, foundPresent = false;
+
+        bool foundCompute = false;
+        bool foundGraphics = false;
+        bool foundPresent = false;
         int i = 0;
         for (auto& qp : qProps) {
             if (!foundCompute && (qp.queueFlags & VK_QUEUE_COMPUTE_BIT)) {
@@ -834,9 +685,12 @@ void VulkanRaymarchApp::pickPhysicalDevice()
     }
 }
 
+//===========================================================
+// createLogicalDevice
+//===========================================================
 void VulkanRaymarchApp::createLogicalDevice()
 {
-    std::set<uint32_t> fams{ m_graphicsQueueFamily,m_presentQueueFamily,m_computeQueueFamily };
+    std::set<uint32_t> fams{ m_graphicsQueueFamily, m_presentQueueFamily, m_computeQueueFamily };
     float qp = 1.f;
     std::vector<VkDeviceQueueCreateInfo> qCIs;
     for (auto f : fams) {
@@ -853,13 +707,13 @@ void VulkanRaymarchApp::createLogicalDevice()
 
     VkDeviceCreateInfo di{};
     di.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    di.queueCreateInfoCount = (uint32_t)qCIs.size();
+    di.queueCreateInfoCount = static_cast<uint32_t>(qCIs.size());
     di.pQueueCreateInfos = qCIs.data();
     di.pEnabledFeatures = &feats;
-    di.enabledExtensionCount = (uint32_t)devExt.size();
+    di.enabledExtensionCount = static_cast<uint32_t>(devExt.size());
     di.ppEnabledExtensionNames = devExt.data();
     if (m_enableValidationLayers) {
-        di.enabledLayerCount = (uint32_t)m_validationLayers.size();
+        di.enabledLayerCount = static_cast<uint32_t>(m_validationLayers.size());
         di.ppEnabledLayerNames = m_validationLayers.data();
     }
     else {
@@ -874,6 +728,9 @@ void VulkanRaymarchApp::createLogicalDevice()
     vkGetDeviceQueue(m_device, m_presentQueueFamily, 0, &m_presentQueue);
 }
 
+//===========================================================
+// createSurface
+//===========================================================
 void VulkanRaymarchApp::createSurface()
 {
     if (glfwCreateWindowSurface(m_instance, m_window, nullptr, &m_surface) != VK_SUCCESS) {
@@ -881,6 +738,9 @@ void VulkanRaymarchApp::createSurface()
     }
 }
 
+//===========================================================
+// createSwapChain
+//===========================================================
 void VulkanRaymarchApp::createSwapChain()
 {
     int w = 0, h = 0;
@@ -902,8 +762,11 @@ void VulkanRaymarchApp::createSwapChain()
     }
     VkSurfaceFormatKHR chosen = fmts[0];
     for (auto& f : fmts) {
-        if (f.format == VK_FORMAT_B8G8R8A8_UNORM && f.colorSpace == VK_COLORSPACE_SRGB_NONLINEAR_KHR) {
-            chosen = f; break;
+        if (f.format == VK_FORMAT_B8G8R8A8_UNORM &&
+            f.colorSpace == VK_COLORSPACE_SRGB_NONLINEAR_KHR)
+        {
+            chosen = f;
+            break;
         }
     }
 
@@ -914,7 +777,8 @@ void VulkanRaymarchApp::createSwapChain()
     VkPresentModeKHR chosenPM = VK_PRESENT_MODE_FIFO_KHR;
     for (auto& pm : pms) {
         if (pm == VK_PRESENT_MODE_MAILBOX_KHR) {
-            chosenPM = pm; break;
+            chosenPM = pm;
+            break;
         }
     }
 
@@ -923,8 +787,8 @@ void VulkanRaymarchApp::createSwapChain()
         ext = caps.currentExtent;
     }
     else {
-        ext.width = (uint32_t)w;
-        ext.height = (uint32_t)h;
+        ext.width = static_cast<uint32_t>(w);
+        ext.height = static_cast<uint32_t>(h);
     }
 
     uint32_t imgCount = caps.minImageCount + 1;
@@ -943,7 +807,7 @@ void VulkanRaymarchApp::createSwapChain()
     sci.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
     if (m_graphicsQueueFamily != m_presentQueueFamily) {
-        uint32_t indices[2] = { m_graphicsQueueFamily,m_presentQueueFamily };
+        uint32_t indices[2] = { m_graphicsQueueFamily, m_presentQueueFamily };
         sci.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
         sci.queueFamilyIndexCount = 2;
         sci.pQueueFamilyIndices = indices;
@@ -966,10 +830,13 @@ void VulkanRaymarchApp::createSwapChain()
     m_swapChainExtent = ext;
 }
 
+//===========================================================
+// createSwapChainImageViews
+//===========================================================
 void VulkanRaymarchApp::createSwapChainImageViews()
 {
     m_swapChainImageViews.resize(m_swapChainImages.size());
-    for (size_t i = 0;i < m_swapChainImages.size();i++) {
+    for (size_t i = 0; i < m_swapChainImages.size(); i++) {
         VkImageViewCreateInfo ivci{};
         ivci.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
         ivci.image = m_swapChainImages[i];
@@ -985,6 +852,9 @@ void VulkanRaymarchApp::createSwapChainImageViews()
     }
 }
 
+//===========================================================
+// createCommandPool
+//===========================================================
 void VulkanRaymarchApp::createCommandPool()
 {
     VkCommandPoolCreateInfo cpi{};
@@ -996,6 +866,9 @@ void VulkanRaymarchApp::createCommandPool()
     }
 }
 
+//===========================================================
+// createComputeResources => createStorageImage
+//===========================================================
 void VulkanRaymarchApp::createComputeResources()
 {
     createStorageImage();
@@ -1033,7 +906,7 @@ void VulkanRaymarchApp::createStorageImage()
     mai.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
     mai.allocationSize = memReq.size;
     bool found = false;
-    for (uint32_t i = 0;i < mp.memoryTypeCount;i++) {
+    for (uint32_t i = 0; i < mp.memoryTypeCount; i++) {
         if ((memReq.memoryTypeBits & (1 << i)) &&
             ((mp.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) ==
                 VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT))
@@ -1064,11 +937,11 @@ void VulkanRaymarchApp::createStorageImage()
     }
 }
 
+//===========================================================
+// createDescriptorSetLayout
+//===========================================================
 void VulkanRaymarchApp::createDescriptorSetLayout()
 {
-    // binding=0 => storage image
-    // binding=1 => old buffer
-    // binding=2 => new buffer
     VkDescriptorSetLayoutBinding b0{};
     b0.binding = 0;
     b0.descriptorCount = 1;
@@ -1087,7 +960,7 @@ void VulkanRaymarchApp::createDescriptorSetLayout()
     b2.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
     b2.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
 
-    VkDescriptorSetLayoutBinding binds[3] = { b0,b1,b2 };
+    VkDescriptorSetLayoutBinding binds[3] = { b0, b1, b2 };
 
     VkDescriptorSetLayoutCreateInfo ci{};
     ci.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -1099,6 +972,9 @@ void VulkanRaymarchApp::createDescriptorSetLayout()
     }
 }
 
+//===========================================================
+// createComputePipeline
+//===========================================================
 void VulkanRaymarchApp::createComputePipeline()
 {
     auto spv = readFile("shaders/raymarch_comp.spv");
@@ -1144,9 +1020,12 @@ void VulkanRaymarchApp::createComputePipeline()
     vkDestroyShaderModule(m_device, compMod, nullptr);
 }
 
+//===========================================================
+// createDescriptorPoolAndSets
+//===========================================================
 void VulkanRaymarchApp::createDescriptorPoolAndSets()
 {
-    uint32_t scCount = (uint32_t)m_swapChainImages.size();
+    uint32_t scCount = static_cast<uint32_t>(m_swapChainImages.size());
     if (scCount == 0) throw std::runtime_error("swapchain=0 => can't create desc sets");
 
     VkDescriptorPoolSize ps[3]{};
@@ -1180,8 +1059,7 @@ void VulkanRaymarchApp::createDescriptorPoolAndSets()
         throw std::runtime_error("failed to allocate descriptor sets");
     }
 
-    // for each set => binding=0 => storage image
-    for (size_t i = 0;i < m_descriptorSets.size();i++) {
+    for (size_t i = 0; i < m_descriptorSets.size(); i++) {
         VkDescriptorImageInfo imInfo{};
         imInfo.imageView = m_storageImageView;
         imInfo.imageLayout = VK_IMAGE_LAYOUT_GENERAL;
@@ -1198,9 +1076,12 @@ void VulkanRaymarchApp::createDescriptorPoolAndSets()
     }
 }
 
+//===========================================================
+// createCommandBuffers
+//===========================================================
 void VulkanRaymarchApp::createCommandBuffers()
 {
-    uint32_t scCount = (uint32_t)m_swapChainImages.size();
+    uint32_t scCount = static_cast<uint32_t>(m_swapChainImages.size());
     m_commandBuffers.resize(scCount);
 
     VkCommandBufferAllocateInfo ai{};
@@ -1213,9 +1094,12 @@ void VulkanRaymarchApp::createCommandBuffers()
     }
 }
 
+//===========================================================
+// createSyncObjects
+//===========================================================
 void VulkanRaymarchApp::createSyncObjects()
 {
-    uint32_t scCount = (uint32_t)m_swapChainImages.size();
+    uint32_t scCount = static_cast<uint32_t>(m_swapChainImages.size());
     m_imageAvailableSemaphores.resize(scCount);
     m_renderFinishedSemaphores.resize(scCount);
     m_inFlightFences.resize(scCount);
@@ -1226,7 +1110,7 @@ void VulkanRaymarchApp::createSyncObjects()
     fi.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
     fi.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-    for (uint32_t i = 0;i < scCount;i++) {
+    for (uint32_t i = 0; i < scCount; i++) {
         if (vkCreateSemaphore(m_device, &si, nullptr, &m_imageAvailableSemaphores[i]) != VK_SUCCESS ||
             vkCreateSemaphore(m_device, &si, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS ||
             vkCreateFence(m_device, &fi, nullptr, &m_inFlightFences[i]) != VK_SUCCESS)
@@ -1234,4 +1118,79 @@ void VulkanRaymarchApp::createSyncObjects()
             throw std::runtime_error("failed to create sync objects");
         }
     }
+}
+
+//===========================================================
+// cleanupSwapChain / recreateSwapChain
+//===========================================================
+void VulkanRaymarchApp::cleanupSwapChain()
+{
+    for (auto iv : m_swapChainImageViews) {
+        vkDestroyImageView(m_device, iv, nullptr);
+    }
+    vkDestroySwapchainKHR(m_device, m_swapChain, nullptr);
+}
+
+void VulkanRaymarchApp::recreateSwapChain()
+{
+    int w = 0, h = 0;
+    glfwGetFramebufferSize(m_window, &w, &h);
+    while (w == 0 || h == 0) {
+        glfwGetFramebufferSize(m_window, &w, &h);
+        glfwWaitEvents();
+    }
+    vkDeviceWaitIdle(m_device);
+
+    cleanupSwapChain();
+    createSwapChain();
+    createSwapChainImageViews();
+
+    vkDestroyImage(m_device, m_storageImage, nullptr);
+    vkDestroyImageView(m_device, m_storageImageView, nullptr);
+    vkFreeMemory(m_device, m_storageImageMemory, nullptr);
+    createStorageImage();
+
+    vkDestroyDescriptorPool(m_device, m_descriptorPool, nullptr);
+    createDescriptorPoolAndSets();
+    updateDescriptorSetsWithBranchBuffers();
+
+    vkFreeCommandBuffers(m_device, m_commandPool, static_cast<uint32_t>(m_commandBuffers.size()), m_commandBuffers.data());
+    createCommandBuffers();
+}
+
+//===========================================================
+// checkValidationLayerSupport
+//===========================================================
+bool VulkanRaymarchApp::checkValidationLayerSupport()
+{
+    uint32_t layerCount = 0;
+    vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+    std::vector<VkLayerProperties> layers(layerCount);
+    vkEnumerateInstanceLayerProperties(&layerCount, layers.data());
+    for (auto& req : m_validationLayers) {
+        bool found = false;
+        for (auto& l : layers) {
+            if (std::strcmp(l.layerName, req) == 0) {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            return false;
+    }
+    return true;
+}
+
+//===========================================================
+// getRequiredExtensions
+//===========================================================
+std::vector<const char*> VulkanRaymarchApp::getRequiredExtensions()
+{
+    uint32_t glfwCount = 0;
+    const char** glfwExt = glfwGetRequiredInstanceExtensions(&glfwCount);
+    std::vector<const char*> ret(glfwExt, glfwExt + glfwCount);
+    if (m_enableValidationLayers) {
+        ret.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    }
+    return ret;
 }

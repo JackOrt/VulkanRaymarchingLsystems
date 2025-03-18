@@ -123,14 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BFSSystem.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CommonHeader.hpp" />
+    <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="src\LSystem3D.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\VulkanRaymarchApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BFSSystem.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="FileUtils.hpp" />
     <ClInclude Include="src\LSystem3D.hpp" />
     <ClInclude Include="src\VulkanRaymarchApp.hpp" />
   </ItemGroup>
