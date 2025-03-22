@@ -47,12 +47,6 @@
 
 ---
 
-## Overview
-
-This project explores the intersection of procedural modeling and modern GPU compute. L-systems are evaluated on the CPU and visualized using a custom **raymarching renderer** on the GPU, enabling seamless animations and smooth level-of-detail effects. While the system supports alternative growth structures beyond classic L-systems, the focus remains on efficient, high-quality visual output and experimental animation techniques.
-
----
-
 ## License
 
 MIT License – Free to use, modify, and distribute.
