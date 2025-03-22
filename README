@@ -2,7 +2,6 @@
 
 **VulkanLSystem3D** is a real-time renderer for procedurally generated 3D tree structures, using **GPU raymarching** to visualize and animate L-systems. The project features smooth growth animations between tree states and is optimized for performance using Vulkan compute shaders.
 
----
 
 ## Features
 
@@ -15,7 +14,6 @@
 - 🎬 **Animated Growth Transitions**  
   Interpolate smoothly between fully grown and partially grown states.
 
----
 
 ## Directory Structure
 
@@ -34,8 +32,6 @@
 │   └── VulkanRaymarchApp.hpp  # App class definition
 ```
 
----
-
 
 ## Requirements
 
@@ -44,16 +40,14 @@
 - GLFW and GLM (via vcpkg or system)
 - `glslc` for GLSL → SPIR-V shader compilation
 
----
 
 ## Overview
 
 This project explores the intersection of procedural modeling and modern GPU compute. L-systems are evaluated on the CPU and visualized using a custom **raymarching renderer** on the GPU, enabling seamless animations and smooth level-of-detail effects. While the system supports alternative growth structures beyond classic L-systems, the focus remains on efficient, high-quality visual output and experimental animation techniques.
 
----
 
 ## License
 
 MIT License – Free to use, modify, and distribute.
 
----
+
