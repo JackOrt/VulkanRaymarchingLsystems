@@ -1,154 +1,178 @@
 ﻿#pragma once
-
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-#include <string>
-#include <vector>
-#include <chrono>
-#include <cstdint>
-#include "BFSSystem.hpp" // For CPUBranch definition
 
-class VulkanRaymarchApp {
+#include "BFSSystem.hpp"
+#include "BVH.hpp"
+#include "LSystem3D.hpp"
+
+#include <vector>
+#include <string>
+#include <chrono>
+
+/*------------------------------------------------------------------------------
+   VulkanRaymarchApp – front‑end (window, camera, UI, dataset writer)
+------------------------------------------------------------------------------*/
+class VulkanRaymarchApp
+{
 public:
-    VulkanRaymarchApp(uint32_t width, uint32_t height, const std::string& title);
+    enum class Mode { Interactive, Dataset };
+
+    /* Interactive constructor */
+    VulkanRaymarchApp(uint32_t width,
+        uint32_t height,
+        const std::string& title);
+
+    /* Dataset constructor – renders <numSamples> hybrids to <outDir> */
+    VulkanRaymarchApp(uint32_t width,
+        uint32_t height,
+        const std::string& outDir,
+        uint32_t numSamples);
+
     ~VulkanRaymarchApp();
 
-    void run();
+    void run();                     /* master loop */
 
 private:
-    // Window
+    /* ---------- window / input ---------- */
     void initWindow();
-    void mainLoop();
     void cleanupWindow();
-
-    // Vulkan initialization
-    void initVulkan();
-    void createInstance();
-    void setupDebugMessenger();
-    void pickPhysicalDevice();
-    void createLogicalDevice();
-    void createSurface();
-    void createSwapChain();
-    void createSwapChainImageViews();
-    void createCommandPool();
-    void createComputeResources();
-    void createStorageImage();
-    void createDescriptorSetLayout();
-    void createComputePipeline();
-    void createDescriptorPoolAndSets();
-    void createCommandBuffers();
-    void createSyncObjects();
-    void cleanupSwapChain();
-    void recreateSwapChain();
-
-    // Branch (BFS) generation and buffer handling
-    void createBranchBuffer(const std::vector<CPUBranch>& branches,
-        VkBuffer& outBuffer,
-        VkDeviceMemory& outMemory,
-        uint32_t& numBranches);
-    void updateDescriptorSetsWithBranchBuffers();
-
-    // Animation: update branch growth (BFS cycle)
-    void checkAnimation();
-
-    // Rendering: record commands and update uniforms
-    void drawFrame();
-    void recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageIndex);
-    void updateUniforms();
-
-    // Utility functions
-    bool checkValidationLayerSupport();
-    std::vector<const char*> getRequiredExtensions();
-    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
-        VkDebugUtilsMessageSeverityFlagBitsEXT severity,
-        VkDebugUtilsMessageTypeFlagsEXT types,
-        const VkDebugUtilsMessengerCallbackDataEXT* data,
-        void* user);
-    VkResult createDebugUtilsMessengerEXT(
-        VkInstance instance,
-        const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
-        const VkAllocationCallbacks* pAllocator,
-        VkDebugUtilsMessengerEXT* pDebugMessenger);
-    void destroyDebugUtilsMessengerEXT(
-        VkInstance instance,
-        VkDebugUtilsMessengerEXT debugMessenger,
-        const VkAllocationCallbacks* pAllocator);
-
-private:
-    // Basic fields
-    uint32_t m_width, m_height;
-    std::string m_windowTitle;
+    void interactiveLoop();
     GLFWwindow* m_window = nullptr;
+    bool        m_fbResized = false;
 
-    VkInstance m_instance = VK_NULL_HANDLE;
+    /* ---------- dataset mode ----------- */
+    void datasetLoop();
+    void captureFrameToPNG(const std::string& fileName);
+    void makeDatasetDirs(uint32_t sampleIdx);
+
+    /* ---------- plant generation ---------- */
+    void maybeRegeneratePlant(bool force = false);
+    void uploadBVH(const BuiltBVH&);
+    void createBranchBuffer(const std::vector<CPUBranch>& src,
+        VkBuffer& buf, VkDeviceMemory& mem,
+        uint32_t& count);
+    void updateDescriptorSetsWithBranchBuffer();
+
+    BuiltBVH m_cachedBVH;
+    std::vector<CPUBranch>   m_cpuBranches;
+    uint32_t                 m_numBranches = 0;
+    float                    m_maxBFS = 0.f;
+
+    /* ---------- Vulkan initialisation / plumbing ----------
+       (all definitions live in VulkanBackend.cpp)            */
+    void initVulkan();
+    void createInstance();          void setupDebugMessenger();
+    void pickPhysicalDevice();      void createLogicalDevice();
+    void createSurface();           void createSwapChain();
+    void createSwapChainImageViews();
+    void createCommandPool();       void createComputeResources();
+    void createStorageImage();      void createDescriptorSetLayout();
+    void createComputePipeline();   void createDescriptorPoolAndSets();
+    void createCommandBuffers();    void createSyncObjects();
+    void cleanupSwapChain();        void recreateSwapChain();
+
+    /* ---------- per‑frame ---------- */
+    void drawFrame();                      /* interactive */
+    void recordCommandBuffer(VkCommandBuffer cmd, uint32_t imageIndex);
+
+    /* ---------- helpers ---------- */
+    bool  checkValidationLayerSupport();
+    std::vector<const char*> getRequiredExtensions();
+
+    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+        VkDebugUtilsMessageSeverityFlagBitsEXT,
+        VkDebugUtilsMessageTypeFlagsEXT,
+        const VkDebugUtilsMessengerCallbackDataEXT*, void*);
+    VkResult createDebugUtilsMessengerEXT(VkInstance,
+        const VkDebugUtilsMessengerCreateInfoEXT*, const VkAllocationCallbacks*,
+        VkDebugUtilsMessengerEXT*);
+    void destroyDebugUtilsMessengerEXT(
+        VkInstance, VkDebugUtilsMessengerEXT, const VkAllocationCallbacks*);
+
+    /* ---------- members ---------- */
+    uint32_t     m_width = 0, m_height = 0;
+    std::string  m_windowTitle;
+
+    Mode         m_mode = Mode::Interactive;
+    std::string  m_datasetDir;
+    uint32_t     m_datasetSamples = 0;
+    uint32_t     m_datasetIdx = 0;
+
+    /* Vulkan handles */
+    VkInstance               m_instance = VK_NULL_HANDLE;
     VkDebugUtilsMessengerEXT m_debugMessenger = VK_NULL_HANDLE;
-    VkSurfaceKHR m_surface = VK_NULL_HANDLE;
-    VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
-    VkDevice m_device = VK_NULL_HANDLE;
+    VkSurfaceKHR             m_surface = VK_NULL_HANDLE;
+    VkPhysicalDevice         m_physicalDevice = VK_NULL_HANDLE;
+    VkDevice                 m_device = VK_NULL_HANDLE;
 
-    uint32_t m_graphicsQueueFamily = 0;
-    uint32_t m_presentQueueFamily = 0;
-    uint32_t m_computeQueueFamily = 0;
-    VkQueue m_graphicsQueue = VK_NULL_HANDLE;
-    VkQueue m_presentQueue = VK_NULL_HANDLE;
-    VkQueue m_computeQueue = VK_NULL_HANDLE;
+    uint32_t  m_graphicsQFamily = 0, m_presentQFamily = 0, m_computeQFamily = 0;
+    VkQueue   m_graphicsQueue = VK_NULL_HANDLE;
+    VkQueue   m_presentQueue = VK_NULL_HANDLE;
+    VkQueue   m_computeQueue = VK_NULL_HANDLE;
 
-    // Swapchain
-    VkSwapchainKHR m_swapChain = VK_NULL_HANDLE;
-    std::vector<VkImage> m_swapChainImages;
-    VkFormat m_swapChainImageFormat = VK_FORMAT_UNDEFINED;
-    VkExtent2D m_swapChainExtent;
-    std::vector<VkImageView> m_swapChainImageViews;
+    VkSwapchainKHR           m_swapChain = VK_NULL_HANDLE;
+    std::vector<VkImage>     m_swapChainImages;
+    VkFormat                 m_swapChainFormat{};
+    VkExtent2D               m_swapChainExtent{};
+    std::vector<VkImageView> m_swapChainViews;
 
-    // Storage image for compute shader output
-    VkImage m_storageImage = VK_NULL_HANDLE;
-    VkDeviceMemory m_storageImageMemory = VK_NULL_HANDLE;
-    VkImageView m_storageImageView = VK_NULL_HANDLE;
+    VkImage        m_storageImage = VK_NULL_HANDLE;
+    VkDeviceMemory m_storageMem = VK_NULL_HANDLE;
+    VkImageView    m_storageView = VK_NULL_HANDLE;
 
-    // Branch buffers
-    std::vector<CPUBranch> m_cpuBranchesOld;
-    uint32_t m_numBranchesOld = 0;
-    VkBuffer m_branchBufferOld = VK_NULL_HANDLE;
-    VkDeviceMemory m_branchBufferOldMem = VK_NULL_HANDLE;
+    /* branch + BVH SSBOs */
+    VkBuffer       m_branchBuffer = VK_NULL_HANDLE;
+    VkDeviceMemory m_branchMem = VK_NULL_HANDLE;
+    VkBuffer       m_bvhNodeBuf = VK_NULL_HANDLE;
+    VkDeviceMemory m_bvhNodeMem = VK_NULL_HANDLE;
+    VkBuffer       m_bvhLeafBuf = VK_NULL_HANDLE;
+    VkDeviceMemory m_bvhLeafMem = VK_NULL_HANDLE;
+    VkBuffer       m_leafIdxBuf = VK_NULL_HANDLE;
+    VkDeviceMemory m_leafIdxMem = VK_NULL_HANDLE;
 
-    std::vector<CPUBranch> m_cpuBranchesNew;
-    uint32_t m_numBranchesNew = 0;
-    VkBuffer m_branchBufferNew = VK_NULL_HANDLE;
-    VkDeviceMemory m_branchBufferNewMem = VK_NULL_HANDLE;
+    VkDescriptorSetLayout        m_setLayout = VK_NULL_HANDLE;
+    VkPipelineLayout             m_pipeLayout = VK_NULL_HANDLE;
+    VkPipeline                   m_pipeline = VK_NULL_HANDLE;
+    VkDescriptorPool             m_descPool = VK_NULL_HANDLE;
+    std::vector<VkDescriptorSet> m_descSets;
 
-    float m_maxBFS = 0.f;
+    VkCommandPool                m_cmdPool = VK_NULL_HANDLE;
+    std::vector<VkCommandBuffer> m_cmdBufs;
 
-    // Pipeline
-    VkDescriptorSetLayout m_descriptorSetLayout = VK_NULL_HANDLE;
-    VkPipelineLayout m_computePipelineLayout = VK_NULL_HANDLE;
-    VkPipeline m_computePipeline = VK_NULL_HANDLE;
-    VkDescriptorPool m_descriptorPool = VK_NULL_HANDLE;
-    std::vector<VkDescriptorSet> m_descriptorSets;
+    std::vector<VkSemaphore>     m_imgAvailSems;
+    std::vector<VkSemaphore>     m_renderDoneSems;
+    std::vector<VkFence>         m_inFlight;
+    size_t                       m_frameIndex = 0;
 
-    // Command buffers
-    VkCommandPool m_commandPool = VK_NULL_HANDLE;
-    std::vector<VkCommandBuffer> m_commandBuffers;
+    /* camera */
+    float  m_camDist = 3.f, m_yaw = 0.f, m_pitch = 15.f;
+    float  m_camCenterY = 0.f;
+    bool   m_dragging = false;
+    double m_lastX = 0, m_lastY = 0;
 
-    // Synchronization objects
-    std::vector<VkSemaphore> m_imageAvailableSemaphores;
-    std::vector<VkSemaphore> m_renderFinishedSemaphores;
-    std::vector<VkFence> m_inFlightFences;
-    size_t m_currentFrame = 0;
-    bool m_framebufferResized = false;
+    // ── live camera state ─────────────────────────────────────────────
+    glm::vec3 m_camPos{ 0.0f, 0.0f, 4.0f };   // world‑space eye position
+    glm::vec3 m_camR{ 1.0f, 0.0f, 0.0f };   // right   (orthonormal)
+    glm::vec3 m_camU{ 0.0f, 1.0f, 0.0f };   // up
+    glm::vec3 m_camF{ 0.0f, 0.0f,-1.0f };   // forward (‑view dir)
 
-    float m_cycleStart = 0.f;
-    float m_alpha = 0.f;
+
+    /* book‑keeping */
     std::chrono::steady_clock::time_point m_startTime;
+    float    m_cycleStart = 0.f;       /* preset auto‑cycle timer */
+    size_t   m_speciesIndex = 0;
+    bool     m_debugColoring = false;
 
-    // Debug coloring toggle: true = debug coloring; false = normal shading.
-    bool m_debugColoring = false;
-
+    /* presets pool (loaded once from presets.json) */
+    std::vector<std::pair<std::string, LSystemPreset>> m_presets;
     const std::vector<const char*> m_validationLayers = {
-        "VK_LAYER_KHRONOS_validation"
+    "VK_LAYER_KHRONOS_validation"
     };
+
 #ifdef NDEBUG
-    const bool m_enableValidationLayers = false;
+    static constexpr bool kEnableValidation = false;
 #else
-    const bool m_enableValidationLayers = true;
+    static constexpr bool kEnableValidation = true;
 #endif
 };

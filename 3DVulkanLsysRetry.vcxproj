@@ -68,6 +68,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VULKAN_SDK)\Include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(VULKAN_SDK)\Lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -90,11 +92,13 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\vcpkg\installed\x64-windows\include;G:\Downloads\My project\VulkanRaymarchingLsystems\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;imgui.lib;vulkan-1.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VULKAN_SDK)\Lib;C:\vcpkg\installed\x64-windows\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -124,18 +128,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BFSSystem.cpp" />
+    <ClCompile Include="BVH.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CommonHeader.hpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="src\LSystem3D.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\VulkanRaymarchApp.cpp" />
+    <ClCompile Include="VulkanBackend.cpp" />
+    <ClCompile Include="VulkanBackend.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BFSSystem.hpp" />
+    <ClInclude Include="BVH.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="FileUtils.hpp" />
-    <ClInclude Include="src\LSystem3D.hpp" />
+    <ClInclude Include="LSystem3D.hpp" />
     <ClInclude Include="src\VulkanRaymarchApp.hpp" />
   </ItemGroup>
   <ItemGroup>
